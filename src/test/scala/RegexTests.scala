@@ -56,7 +56,8 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     strat.execute[Program](targetNode)
   }
 
-
+  // seems to use inhaleExhale for |
+  /*
   test("DisjunctionToInhaleExhaleTests") {
     val filePrefix = "transformations/DisjunctionToInhaleExhale/"
     val files = Seq("simple", "nested", "functions")
@@ -130,10 +131,12 @@ class RegexTests extends FunSuite with FileComparisonHelper {
               """.stripMargin)
     })
   }
+  */
 
+  // tf simple and complex have inhale
   test("ComplexMatching") {
     val filePrefix = "transformations/ComplexMatching/"
-    val files = Seq("simple", "complex")
+    val files = Seq()
 
     // Regular expression
     val t = TreeRegexBuilder.context[Node, Int](_ + _, math.max, 0)
@@ -200,10 +203,11 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     }
   }
 
-
+  // test file "interrupted" contains inhale
+  // test file "nestedBlocks" contains macros
   test("ManyToOneAssert") {
     val filePrefix = "transformations/ManyToOneAssert/"
-    val files = Seq("simple", "interrupted", "nested", "nestedBlocks")
+    val files = Seq("simple", "nested")
     var accumulator: mutable.ListBuffer[Exp] = mutable.ListBuffer.empty[Exp]
 
     val t = TreeRegexBuilder.ancestor[Node]
@@ -242,6 +246,8 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     }
   }
 
+  // uses inhale
+  /*
   test("MethodCallDesugaring") {
     // Careful: Don't use old inside postcondition. It is not yet supported. maybe I will update the testcase (or not)
     val filePrefix = "transformations/MethodCallDesugaring/"
@@ -276,6 +282,7 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     }
     }
   }
+  */
 
   test("CopyPropagation") {
     val filePrefix = "transformations/CopyPropagation/"

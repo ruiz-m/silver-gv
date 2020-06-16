@@ -80,9 +80,11 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
   }
 
 
+  // both tests contain depricated expressions
   test("QuantifiedPermissions") {
     val filePrefix = "transformations/QuantifiedPermissions/"
-    val files = Seq("simple", "allCases")
+  //  val files = Seq("simple", "allCases")
+    val files = Seq()
 
     val strat = ViperStrategy.Ancestor({
       case (f@Forall(_, _, Implies(_, r)), c) if r.isPure =>
@@ -99,9 +101,12 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
 
   }
 
-  test("DisjunctionToInhaleExhaleTests") {
+  // Test files "nested" and "functions" removed bcz contain functions
+  // Test relies on inhaleExhale
+/*
+   test("DisjunctionToInhaleExhaleTests") {
     val filePrefix = "transformations/DisjunctionToInhaleExhale/"
-    val files = Seq("simple", "nested", "functions")
+    val files = Seq("simple")
 
     val frontend = new MockSilFrontend
     files foreach {
@@ -154,7 +159,7 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
                 """.stripMargin)
       }
     }
-  }
+  } */
 
   test("ImplicationToDisjunctionTests") {
     val filePrefix = "transformations/ImplicationsToDisjunction/"
@@ -202,9 +207,11 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
     }
   }
 
+  // test file "interrupted" contains inhale
+  // test file "nestedBlocks" contains macros
   test("ManyToOneAssert") {
     val filePrefix = "transformations/ManyToOneAssert/"
-    val files = Seq("simple", "interrupted", "nested", "nestedBlocks")
+    val files = Seq("simple", "nested")
 
     val strat = ViperStrategy.Ancestor({
       case (a: Assert, c) =>
@@ -233,9 +240,12 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
     }
   }
 
+
+  // test file "interrupted" contains inhale
+  // test file "nestedBlocks" contains macros
   test("ManyToOneAssert2") {
     val filePrefix = "transformations/ManyToOneAssert/"
-    val files = Seq("simple", "interrupted", "nested", "nestedBlocks")
+    val files = Seq("simple", "nested")
 
     var accumulator: List[Exp] = List.empty[Exp]
     val strat = ViperStrategy.Ancestor({
@@ -298,9 +308,11 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
     }
   }
 
+  // tf nested has inhale
+  // tf traverseEverything has functions
   test("CountAdditions") {
     val filePrefix = "transformations/CountAdditions/"
-    val filesAndResults = Seq(("simple", 3), ("nested", 10), ("traverseEverything", 12))
+    val filesAndResults = Seq(("simple", 3))
 
     val query = new Query[Node, Int]({
       case _: Add => 1
@@ -328,6 +340,8 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
     })
   }
 
+  // rewriting involves inhale and Exhale
+  /*
   test("MethodCallDesugaring") {
     // Careful: Don't use old inside postcondition. It is not yet supported. maybe I will update the testcase
     val filePrefix = "transformations/MethodCallDesugaring/"
@@ -359,6 +373,7 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
       fileName: String => executeTest(filePrefix, fileName, strat, frontend)
     }
   }
+  */
 
   test("ImplicationSimplification") {
     val filePrefix = "transformations/ImplicationSimplification/"

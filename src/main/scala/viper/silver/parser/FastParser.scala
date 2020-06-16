@@ -690,6 +690,8 @@ object FastParser extends PosParser[Char, String] {
   /** The file we are currently parsing (for creating positions later). */
   def file: Path = _file
 
+
+  // pruned label, goto, exhale, inhale
   lazy val keywords = Set("result",
     // types
     "Int", "Perm", "Bool", "Ref", "Rational",
@@ -704,9 +706,9 @@ object FastParser extends PosParser[Char, String] {
     // specifications
     "requires", "ensures", "invariant",
     // statements
-    "fold", "unfold", "inhale", "exhale", "new", "assert", "assume", "package", "apply",
+    "fold", "unfold", "new", "assert", "assume", "package", "apply",
     // control flow
-    "while", "if", "elseif", "else", "goto", "label",
+    "while", "if", "elseif", "else",
     // sequences
     "Seq",
     // sets and multisets
@@ -724,10 +726,10 @@ object FastParser extends PosParser[Char, String] {
     // modifiers
     "unique") | ParserExtension.extendedKeywords
 
-
+    // pruned inhaleExhale
   lazy val atom: P[PExp] = P(ParserExtension.newExpAtStart | integer | booltrue | boolfalse | nul | old
     | result | unExp
-    | "(" ~ exp ~ ")" | accessPred | inhaleExhale | perm | let | quant | forperm | unfolding | applying
+    | "(" ~ exp ~ ")" | accessPred | perm | let | quant | forperm | unfolding | applying
     | setTypedEmpty | explicitSetNonEmpty | multiSetTypedEmpty | explicitMultisetNonEmpty | seqTypedEmpty
     | seqLength | explicitSeqNonEmpty | seqRange | fapp | typedFapp | idnuse | ParserExtension.newExpAtEnd)
 
@@ -943,13 +945,14 @@ object FastParser extends PosParser[Char, String] {
     case (func, args, typeGiven) => PCall(func, args, Some(typeGiven))
   }
 
-  lazy val stmt: P[PStmt] = P(ParserExtension.newStmtAtStart | macroassign | fieldassign | localassign | fold | unfold | exhale | assertP |
-    inhale | assume | ifthnels | whle | varDecl | defineDecl | newstmt | 
-    methodCall | goto | lbl | packageWand | applyWand | macroref | block | ParserExtension.newStmtAtEnd)
+  // pruned lbl, goto, exhale, inhale, packageWand, applyWand
+  lazy val stmt: P[PStmt] = P(ParserExtension.newStmtAtStart | macroassign | fieldassign | localassign | fold | unfold | assertP |
+    assume | ifthnels | whle | varDecl | defineDecl | newstmt |
+    methodCall | macroref | block | ParserExtension.newStmtAtEnd)
 
-  lazy val nodefinestmt: P[PStmt] = P(ParserExtension.newStmtAtStart | fieldassign | localassign | fold | unfold | exhale | assertP |
-    inhale | assume | ifthnels | whle | varDecl | newstmt |
-    methodCall | goto | lbl | packageWand | applyWand | macroref | block | ParserExtension.newStmtAtEnd)
+  lazy val nodefinestmt: P[PStmt] = P(ParserExtension.newStmtAtStart | fieldassign | localassign | fold | unfold | assertP |
+    assume | ifthnels | whle | varDecl | newstmt |
+    methodCall  | macroref | block | ParserExtension.newStmtAtEnd)
 
   lazy val macroref: P[PMacroRef] = P(idnuse).map(a => PMacroRef(a))
 

@@ -20,15 +20,18 @@ class ParseTreeTests extends FunSuite {
       parseAndCompare(filePrefix + fileName + ".vpr", filePrefix + fileName + "Ref" + ".vpr", frontend))
   }
 
+  // tests involve macros
+  // tf loopConstruction involves goto
   test("HygienicMacros") {
     val filePrefix = "transformations/Macros/Hygienic/"
-    val files = Seq("simple", "nested", "collision", "collision2", "forall", "loopConstruction")
+    val files = Seq("simple", "nested", "collision", "collision2", "forall")
 
     val frontend = new MockSilFrontend
 
     files foreach (fileName =>
       parseAndCompare(filePrefix + fileName + ".vpr", filePrefix + fileName + "Ref" + ".vpr", frontend))
   }
+
 
   test("Positions and Paths") {
     val filePrefix = "transformations/Imports/"
