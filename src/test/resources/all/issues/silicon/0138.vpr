@@ -3,8 +3,9 @@
 
 predicate P() { true }
 
-method test01() {
-  inhale acc(P())
+method test01()
+  requires acc(P())
+{
 
   while (true)
     invariant true
@@ -16,7 +17,7 @@ method test01() {
 }
 
 /* Originally reported code */
-
+/*
 domain Process {
   function p_single(n: Int): Process
 }
@@ -44,7 +45,8 @@ method Ref__do_incr_loop(diz: Ref, n: Int, k: Int, h: Ref)
     invariant h != null
     invariant acc(Ref__hist_idle(h, diz, p_single(k + i)), write)
   {
-    //:: ExpectedOutput(assert.failed:assertion.false)
+    /:: ExpectedOutput(assert.failed:assertion.false)
     assert false
   }
 }
+*/

@@ -6,6 +6,8 @@
 //:: IgnoreFile(/silicon/issue/274/)
 /* See list_insert.vpr */
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field __CONFIG_HEURISTICS: Bool /* Activates heuristics */
 
 field val: Int

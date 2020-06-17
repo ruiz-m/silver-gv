@@ -11,8 +11,9 @@ predicate P(r: Ref) {
 
 predicate Q(r: Ref) {true}
 
-method test01(r: Ref) returns () {
-  inhale acc(P(r))
+method test01(r: Ref) returns ()
+  requires acc(P(r))
+{
   unfold acc(P(r), wildcard)
 
   //:: ExpectedOutput(assert.failed:assertion.false)
@@ -26,8 +27,9 @@ predicate Rec(x: Ref) {
   && (x.f != null ==> acc(Rec(x.f), wildcard))
 }
 
-method test02(x: Ref) {
-  inhale Rec(x)
+method test02(x: Ref)
+  requires Rec(x)
+{
   var y: Ref := unfolding Rec(x) in x.f
 }
 

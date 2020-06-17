@@ -23,22 +23,24 @@ method test02(x: Ref) returns (b: Bool) {
   }
 }
 
+/*
 method test03(x: Ref) returns (b: Bool)
   requires acc(x.f)
 {
   while (b)
-    //:: ExpectedOutput(invariant.not.preserved:insufficient.permission)
+    /:: ExpectedOutput(invariant.not.preserved:insufficient.permission)
     invariant acc(x.f, 1/2)
   {
     exhale acc(x.f, 1/4)
     b := !b
   }
 }
-
+*/
+/*
 method test20a(x: Ref, y: Ref) returns (n: Int)
   requires acc(x.f)
   ensures  n == 42 ==> acc(y.f)
-  //:: UnexpectedOutput(postcondition.violated:insufficient.permission, /carbon/issue/182/)
+  /:: UnexpectedOutput(postcondition.violated:insufficient.permission, /carbon/issue/182/)
   ensures  acc(x.f) && x.f == old(x.f)
 {
   while (n != 0)
@@ -55,7 +57,7 @@ method test20a(x: Ref, y: Ref) returns (n: Int)
   label brk
 
   if (n == 0) {
-    //:: ExpectedOutput(assert.failed:assertion.false)
+    /:: ExpectedOutput(assert.failed:assertion.false)
     assert perm(y.f) == none
   }
 }
@@ -63,7 +65,7 @@ method test20a(x: Ref, y: Ref) returns (n: Int)
 method test20b(x: Ref, y: Ref) returns (n: Int)
   requires acc(x.f) && x != y
   ensures  n == 42 ==> acc(y.f)
-  //:: UnexpectedOutput(postcondition.violated:insufficient.permission, /carbon/issue/182/)
+  /:: UnexpectedOutput(postcondition.violated:insufficient.permission, /carbon/issue/182/)
   ensures  acc(x.f) && x.f == old(x.f)
 {
   while (n != 0)
@@ -83,3 +85,4 @@ method test20b(x: Ref, y: Ref) returns (n: Int)
     assert perm(y.f) == none
   }
 }
+*/

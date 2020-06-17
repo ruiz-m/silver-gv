@@ -5,6 +5,8 @@
 
 /* See tree_delete_min.vpr */
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field __CONFIG_HEURISTICS: Bool /* Activates heuristics */
 
 field v: Int

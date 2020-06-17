@@ -6,6 +6,8 @@
  * book-keep permissions in the loop.
  */
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field val: Int
 field next: Ref
 

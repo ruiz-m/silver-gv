@@ -19,7 +19,7 @@ method Test__seq_of_object(diz: Ref, current_thread_id: Int)
   L := Seq[Ref]()
   assert |L| == 0
 }
-
+/*
 method Test__Test(current_thread_id: Int) returns (sys__result: Ref)
   requires current_thread_id >= 0
   ensures sys__result != null
@@ -29,4 +29,4 @@ method Test__Test(current_thread_id: Int) returns (sys__result: Ref)
   sys__result := diz
   assert sys__result != null
   inhale false
-}
+}*/

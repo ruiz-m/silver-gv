@@ -1,3 +1,6 @@
+
+
+//:: IgnoreFile(/silicon/issue/208/)
 // predicate AWOne(sender: Int)
 
 // method test_AWOne(last: Int) {

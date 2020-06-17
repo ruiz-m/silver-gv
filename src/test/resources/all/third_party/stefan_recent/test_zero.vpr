@@ -37,7 +37,7 @@ method zero__main_main(diz: Ref, current_thread_id: Int, tcount: Int, gsize: Int
   __flatten_2 := 0
   __flatten_1.Ref__Integer_value := __flatten_2
 }
-
+/*
 method zero__main_barrier(diz: Ref, current_thread_id: Int, tcount: Int, gsize: Int, tid: Int, gid: Int, lid: Int, this_barrier: Int, last_barrier: Int) returns (sys__result: Int)
   requires diz != null
   requires current_thread_id >= 0
@@ -63,4 +63,4 @@ method zero__main_barrier(diz: Ref, current_thread_id: Int, tcount: Int, gsize: 
   ensures sys__result == this_barrier
 {
   inhale false
-}
+}*/

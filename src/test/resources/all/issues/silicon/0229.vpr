@@ -3,6 +3,8 @@
 
 /* Simplified problem */
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 define RHS2 old(unfolding acc(valid2(x)) in x.r)
 
 method test42(x: Ref)
@@ -51,4 +53,3 @@ predicate valid__Foo(self: Ref) {
   acc(self.Foo__v2.Int__v)
 }
 field Int__v: Int
-

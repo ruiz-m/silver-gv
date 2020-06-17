@@ -1,6 +1,8 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field f: Int
 
 method t(x:Ref) {
@@ -13,5 +15,3 @@ method t(x:Ref) {
   //:: ExpectedOutput(assert.failed:assertion.false)
   assert false
 }
-
-

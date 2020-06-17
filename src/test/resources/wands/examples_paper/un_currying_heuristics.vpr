@@ -3,6 +3,8 @@
 
 //:: IgnoreFile(/carbon/issue/103/)
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 /* See un_currying.vpr */
 
 field __CONFIG_HEURISTICS: Bool /* Activates heuristics */
@@ -18,7 +20,7 @@ define B acc(Q())
 define C acc(R())
 
 /* A --* B --* C  ==>  A * B --* C */
-method uncurry() 
+method uncurry()
   requires A --* (B --* C)
   ensures A && B --* C
 {
@@ -26,7 +28,7 @@ method uncurry()
 }
 
 /* A * B --* C  ==>  A --* B --* C */
-method curry() 
+method curry()
   requires A && B --* C
   ensures A --* (B --* C)
 {

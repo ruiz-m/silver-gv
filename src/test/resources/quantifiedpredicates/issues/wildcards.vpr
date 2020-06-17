@@ -1,6 +1,8 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 predicate P(x: Ref, idx: Int)
 
 method test01(x: Ref)
@@ -21,4 +23,3 @@ method test02(x: Ref)
   //:: UnexpectedOutput(exhale.failed:negative.permission, /carbon/issue/180/)
   exhale forall r: Ref :: r in xs ==> acc(P(r, 0), perm(P(r, 0)))
 }
-

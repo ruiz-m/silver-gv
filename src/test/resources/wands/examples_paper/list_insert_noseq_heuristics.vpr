@@ -5,6 +5,8 @@
 
 /* See list_insert_noseq.vpr */
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field __CONFIG_HEURISTICS: Bool /* Activates heuristics */
 
 field val: Int

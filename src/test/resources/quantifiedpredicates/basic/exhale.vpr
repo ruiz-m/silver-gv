@@ -1,6 +1,8 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field f: Int
 
 predicate pred1(a:Ref) {
@@ -83,7 +85,7 @@ method test01(x: Ref)
    //:: ExpectedOutput(unfold.failed:insufficient.permission)
    unfold pred1(y)
  }
- 
+
    method test06_qp(xs: Seq[Ref], y: Ref, z:Ref)
    requires y in xs
    requires forall x: Ref :: x in xs ==> acc(pred1(x))
@@ -92,7 +94,7 @@ method test01(x: Ref)
    //:: ExpectedOutput(unfold.failed:insufficient.permission)
    unfold pred1(z)
  }
- 
+
  	//retain unfolded knowledge
    method test07_qp(xs: Seq[Ref], y: Ref)
    requires y in xs

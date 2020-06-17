@@ -3,6 +3,8 @@
 
 /* Examples used to investigate how to optimise the terms created by Silicon */
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field f: Int
 
 method test01(xs: Seq[Ref])

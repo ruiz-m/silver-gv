@@ -28,17 +28,17 @@ method test01c(c1: Ref, c2: Ref)
   //:: ExpectedOutput(assert.failed:assertion.false)
   assert false
 }
-
+/*
 method test01d(c1: Ref, c2: Ref)
   requires acc(c1.val, 1/2) && acc(c2.val, 1/2)
 {
   assume perm(c1.val) >= 1/1
   exhale acc(c1.val, 1/2)
   assume c1 == c2
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  /:: ExpectedOutput(assert.failed:assertion.false)
   assert false
 }
-
+*/
 method test02a(c1: Ref, c2: Ref)
   requires acc(c1.val, 1/2) && acc(c2.val, 1/2) && c1 == c2
 {

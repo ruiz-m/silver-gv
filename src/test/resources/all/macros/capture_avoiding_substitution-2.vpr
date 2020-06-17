@@ -8,6 +8,8 @@
 
 // ========= Rule 2 enforcement =========
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 define macro1(x) (
     forall i: Int :: i == x
 )

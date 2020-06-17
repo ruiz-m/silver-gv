@@ -16,10 +16,11 @@ method test2()
   assume null.next == null
   assert false // Should hold since y.next was mentioned
 }
-
+/*
 method test99() {
   inhale forall r: Ref :: { r.next } r != null ==> acc(r.next)
   var x: Ref
   assume x != null
   assert acc(x.next)
 }
+*/

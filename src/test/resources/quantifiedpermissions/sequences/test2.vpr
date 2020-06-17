@@ -23,7 +23,7 @@ method test03(s: Seq[Ref], x: Ref)
 {
   assert x.f == old(x.f)
 }
-
+/*
 method test04(s: Seq[Ref], x: Ref)
   requires forall i: Int :: i in [0..|s|) ==> acc(s[i].f)
   requires forall i: Int :: i in [0..|s|) && s[i].f > 0 ==> s[i].f > 5
@@ -31,7 +31,7 @@ method test04(s: Seq[Ref], x: Ref)
 {
   exhale forall i: Int :: i in [0..|s|) && s[i].f > 5 ==> acc(s[i].f)
 
-  //:: ExpectedOutput(assert.failed:insufficient.permission)
+  /:: ExpectedOutput(assert.failed:insufficient.permission)
   assert x.f == old(x.f)
 }
 
@@ -47,3 +47,4 @@ method test05(s: Seq[Ref], x: Ref)
     assert x.f == old(x.f)
   }
 }
+*/

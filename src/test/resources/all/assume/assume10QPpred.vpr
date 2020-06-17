@@ -2,6 +2,7 @@
 // http://creativecommons.org/publicdomain/zero/1.0/
 
 //:: IgnoreFile(/carbon/issue/256/)
+//:: IgnoreFile(/silicon/issue/208/)
 
 field f: Int
 
@@ -12,13 +13,14 @@ method m(xs1: Set[Ref], xs2: Set[Ref], xs3: Set[Ref], xs4: Set[Ref], xs5: Set[Re
         zs1: Set[Ref], zs2: Set[Ref], zs3: Set[Ref], zs4: Set[Ref], zs5: Set[Ref], zs6: Set[Ref],
         zs7: Set[Ref], zs8: Set[Ref], zs9: Set[Ref], zs10: Set[Ref], zs11: Set[Ref],
         xs: Set[Ref], ys: Set[Ref], zs: Set[Ref],
-        q: Perm) {
-
-  inhale none <= q
-  inhale forall x: Ref, y: Ref, z: Ref :: {x in xs, y in ys, z in zs}
+        q: Perm)
+  requires none <= q
+  requires forall x: Ref, y: Ref, z: Ref :: {x in xs, y in ys, z in zs}
             x in xs && y in ys && z in zs ==> acc(p(x, y, z), q)
 
-  assume
+{
+
+assume
        (forall x1: Ref, y1: Ref, z1: Ref :: {p(x1, y1, z1)} x1 in xs1 && y1 in ys1 && z1 in zs1 ==> acc(p(x1, y1, z1), q))
     && (forall x2: Ref, y2: Ref, z2: Ref :: {p(x2, y2, z2)} x2 in xs2 && y2 in ys2 && z2 in zs2 ==> acc(p(x2, y2, z2), q))
     && (forall x3: Ref, y3: Ref, z3: Ref :: {p(x3, y3, z3)} x3 in xs3 && y3 in ys3 && z3 in zs3 ==> acc(p(x3, y3, z3), q))

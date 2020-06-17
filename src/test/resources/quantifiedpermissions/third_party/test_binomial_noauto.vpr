@@ -1,6 +1,8 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field demo__ar: Seq[Ref]
 
 field demo__tmp: Seq[Ref]
@@ -76,7 +78,7 @@ method demo__main_main(diz: Ref, current_thread_id: Int, tcount: Int, gsize: Int
     invariant N < gsize
     invariant acc(diz.demo__ar[tid].Ref__Integer_value, write)
     invariant acc(diz.demo__tmp[tid].Ref__Integer_value, write)
-    invariant diz.demo__ar[tid].Ref__Integer_value == (tid < N ? demo__bin(N, tid) : 1) 
+    invariant diz.demo__ar[tid].Ref__Integer_value == (tid < N ? demo__bin(N, tid) : 1)
   {
     __flatten_3 := diz.demo__tmp[tid]
     __flatten_5 := diz.demo__ar[tid]

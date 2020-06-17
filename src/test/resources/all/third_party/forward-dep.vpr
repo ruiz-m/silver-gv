@@ -3,6 +3,8 @@
 
 /* Provided by Stefan Blom of U Twente. */
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field ar: Seq[Ref]
 
 field Integer_value: Int
@@ -22,7 +24,7 @@ method main_main(this: Ref, tcount: Int, tid: Int)
   ensures this.ar[tid].Integer_value == tid + 1
 {
   this.ar[tid].Integer_value := tid + 1
-  
+
   exhale acc(this.ar[tid].Integer_value, 1/2)
   inhale acc(this.ar[tid].Integer_value, 1 / 4)
 
@@ -35,4 +37,3 @@ method main_main(this: Ref, tcount: Int, tid: Int)
   inhale acc(this.ar[tid].Integer_value, 1 / 4)
 
 }
-

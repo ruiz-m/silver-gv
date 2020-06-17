@@ -5,9 +5,9 @@ field f: Int
 
 method m(xs1: Set[Ref], xs2: Set[Ref], xs3: Set[Ref], xs4: Set[Ref], xs5: Set[Ref], xs6: Set[Ref],
         xs7: Set[Ref], xs8: Set[Ref], xs9: Set[Ref], xs10: Set[Ref], xs11: Set[Ref],
-        x: Ref, p: Perm) {
-
-  inhale acc(x.f, p)
+        x: Ref, p: Perm)
+  requires acc(x.f, p)
+{
 
   assume (forall x1: Ref :: {x1.f} x1 in xs1 ==> acc(x1.f, p))
       && (forall x2: Ref :: {x2.f} x2 in xs2 ==> acc(x2.f, p))

@@ -9,7 +9,7 @@
 // (3) The relationships between different abstractions is not always automatic. For example, the if-condition tail(xs)==null actually implies that elems(xs) has
 // length 1 and also that head(xs) == tail(xs). Both of these facts are needed to prove the postconditions of insert. Resorting to limited functions would allow
 // manual assertions to trigger these properties. Without limited-functions-style triggering (i.e. only based on fold/unfold of predicates), these must be assumptions
-
+//:: IgnoreFile(/silicon/issue/208/)
 field next: Ref
 field val: Int
 

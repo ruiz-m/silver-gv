@@ -24,7 +24,7 @@ method test02(S:Seq[Ref],a:Int, b:Int, c:Int)
   S[b].value := 10
   S[c].value := 1
 }
-
+/*
 method test03(S: Seq[Ref], k: Int, a: Int, b: Int)
   requires 0 <= k && k < |S| && 0 <= a && a < b && b < |S|
   requires forall j:Int :: j in [0..|S|) ==> acc(S[j].value, write)
@@ -32,7 +32,7 @@ method test03(S: Seq[Ref], k: Int, a: Int, b: Int)
   ensures S[a].value == 5
   ensures S[b].value == 6
 
-  //:: ExpectedOutput(postcondition.violated:assertion.false)
+  /:: ExpectedOutput(postcondition.violated:assertion.false)
   ensures S[k].value == 0
 {
   exhale forall l: Int :: l in [0..k) ==> acc(S[l].value, 1/2)
@@ -45,3 +45,4 @@ method test03(S: Seq[Ref], k: Int, a: Int, b: Int)
   S[b].value := 6
 }
 
+*/

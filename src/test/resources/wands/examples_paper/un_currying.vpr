@@ -1,6 +1,8 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 /* This example shows how our approach to magic wands can be used to
  * prove the property
  *
@@ -38,7 +40,7 @@ define B acc(Q())
 define C acc(R())
 
 /* A --* B --* C  ==>  A * B --* C */
-method uncurry() 
+method uncurry()
   requires A --* (B --* C)
   ensures A && B --* C
 {

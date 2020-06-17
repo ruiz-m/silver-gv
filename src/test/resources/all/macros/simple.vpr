@@ -1,6 +1,8 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 //:: ExpectedOutput(parser.error)
 define macro {
     assert(true)
@@ -18,4 +20,3 @@ method main()
     assert(true)
     macro
 }
-

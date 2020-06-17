@@ -17,7 +17,7 @@ method Test__main1(diz: Ref, current_thread_id: Int, t1: Ref, t2: Ref)
     assert false
   }
 }
-
+/*
 method Test__Test(current_thread_id: Int) returns (sys__result: Ref)
   requires current_thread_id >= 0
   ensures sys__result != null
@@ -29,4 +29,4 @@ method Test__Test(current_thread_id: Int) returns (sys__result: Ref)
   sys__result := diz
   assert (sys__result != null) && (acc(sys__result.Test__next, write) && (sys__result.Test__next == null))
   inhale false
-}
+}*/

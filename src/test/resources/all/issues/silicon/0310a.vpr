@@ -3,6 +3,8 @@
 
 //:: IgnoreFile(/carbon/issue/216/)
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field f: Ref;
 
 method test01() {

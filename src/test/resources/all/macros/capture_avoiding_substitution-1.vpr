@@ -8,6 +8,9 @@
 
 // ========= Rule 1 enforcement =========
 
+
+//:: IgnoreFile(/silicon/issue/208/)
+
 define macro1(i) (
     i == i && forall i: Int :: i == i
   //j == j && forall i: Int :: i == i (substitution after macro expansion)

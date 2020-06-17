@@ -2,15 +2,15 @@ field left: Ref
 field right: Ref
 
 predicate treePerm_simpler(current: Ref) {
-  current != null ==> 
+  current != null ==>
     acc(current.left) &&
     true
 }
 
 method insert_simpler(current: Ref, bool_val: Bool)
   requires bool_val
+  requires acc(current.left)
 {
-  inhale acc(current.left)
 
   fold acc(treePerm_simpler(current))
 
@@ -20,7 +20,7 @@ method insert_simpler(current: Ref, bool_val: Bool)
 
 
 /* Originally reported example */
-
+/*
 predicate treePerm(current: Ref) {
   current != null
           ==> acc(current.left, write)
@@ -37,3 +37,4 @@ method insert(current: Ref, bool_val: Bool)
           || (unfolding acc(treePerm(current), write) in true )
           )
 }
+*/

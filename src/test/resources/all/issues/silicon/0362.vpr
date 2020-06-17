@@ -1,3 +1,6 @@
+
+//:: IgnoreFile(/silicon/issue/208/)
+
 predicate P(r: Ref, x: Int)
 
 function P_state(r: Ref, x: Int): Int

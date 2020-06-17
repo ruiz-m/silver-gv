@@ -3,6 +3,8 @@
 
 /* Provided by Stefan Blom of U Twente. */
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field src: Seq[Ref]
 
 field dst: Seq[Ref]

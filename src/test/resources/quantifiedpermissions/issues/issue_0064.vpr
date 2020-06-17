@@ -33,7 +33,7 @@ method m04(S1: Seq[Ref], S2: Set[Ref], x: Ref)
   // // UnexpectedOutput(postcondition.violated:assertion.false, /carbon/issue/117/)
   ensures  forall y: Ref :: y in S2 ==> y != null
 {}
-
+/*
 method repro(s:Seq[Ref])
 {
   inhale (forall x: Int :: x in [0..|s|) ==> acc(s[x].f))
@@ -45,7 +45,7 @@ method test01(s:Seq[Ref])
 {
   inhale forall x: Ref :: x in s ==> acc(x.f)
   assert forall x: Ref :: x in s ==> x != null
-  //:: UnexpectedOutput(assert.failed:assertion.false, /silicon/issue/64/)
+  /:: UnexpectedOutput(assert.failed:assertion.false, /silicon/issue/64/)
   // // UnexpectedOutput(assert.failed:assertion.false, /carbon/issue/117/) // fixed with diff 8
   assert forall i: Int :: 0 <= i && i < |s| ==> s[i] != null
 }
@@ -66,7 +66,7 @@ method reprothree(s:Seq[Ref])
   assert (forall x: Int :: (0 <= x) && (x < |s|) ==> (s[x].f == 0))
     // Fails in Silicon when using Z3 4.5.0 (and earlier)
     // Works in Silicon when using Z3 4.5.1 (https://github.com/Z3Prover/z3/issues/935)
-} 
+}
 
 method reprofour(s:Seq[Ref])
 {
@@ -78,3 +78,4 @@ method reprofour(s:Seq[Ref])
     // Fails in Silicon when using Z3 4.5.0 (and earlier)
     // Works in Silicon when using Z3 4.5.1 (https://github.com/Z3Prover/z3/issues/935)
 }
+*/

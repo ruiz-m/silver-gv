@@ -1,3 +1,5 @@
+
+//:: IgnoreFile(/silicon/issue/208/)
 domain Array[T] {
 	function loc(a: Array[T], i: Int): T
 }

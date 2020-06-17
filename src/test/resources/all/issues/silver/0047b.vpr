@@ -3,6 +3,8 @@
 
 /* Doesn't seem related to Silver issue #47*/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 predicate F1(r: Ref) {true}
 
 method main(r: Ref)
@@ -12,5 +14,5 @@ method main(r: Ref)
 
 method main2(r: Ref)
 {
-    	inhale F1(r) 
+    	inhale F1(r)
 }

@@ -35,7 +35,7 @@ method t3(r: Ref) returns ()
     //:: ExpectedOutput(call.precondition:insufficient.permission)
     t2(r, write)
 }
-
+/*
 method t4(r: Ref) returns ()
     requires acc(r.f, write)
 {
@@ -44,7 +44,7 @@ method t4(r: Ref) returns ()
     assert acc(r.f, write)
     exhale acc(r.f, write)
     assert (perm(r.f) == none)
-    //:: ExpectedOutput(assert.failed:insufficient.permission)
+    /:: ExpectedOutput(assert.failed:insufficient.permission)
     assert acc(r.f, write)
 }
 
@@ -56,10 +56,10 @@ method t5(r: Ref) returns ()
     assert acc(r.f, wildcard)
     assert acc(r.f, wildcard)
     exhale acc(r.f, perm(r.f))
-    //:: ExpectedOutput(assert.failed:insufficient.permission)
+    /:: ExpectedOutput(assert.failed:insufficient.permission)
     assert acc(r.f, wildcard)
 }
-
+*/
 method t6(r: Ref)
 {
     assert (none == none)

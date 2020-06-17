@@ -3,16 +3,16 @@
 
 field f: Ref
 field p: Perm
-
+/*
 method test01(x: Ref, k: Perm)
   requires acc(x.f)
   requires k < write
   requires k != none
 {
-  //:: ExpectedOutput(exhale.failed:negative.permission)
+  /:: ExpectedOutput(exhale.failed:negative.permission)
   exhale acc(x.f, k)
 }
-
+*/
 method test02(x: Ref)
   requires acc(x.f)
 {
@@ -22,8 +22,9 @@ method test02(x: Ref)
   //:: ExpectedOutput(assert.failed:assertion.false)
   assert none < k
 }
-
+/*
 method test03(x: Ref, k: Perm) {
   inhale acc(x.f, k)
   assert none <= k
 }
+*/

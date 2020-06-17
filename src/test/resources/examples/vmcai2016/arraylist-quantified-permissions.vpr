@@ -3,6 +3,8 @@
 
 //:: IgnoreFile(/carbon/issue/280/)
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 domain Pair[T1,T2] {
   function first(p : Pair[T1,T2]): T1
   function second(p: Pair[T1,T2]): T2

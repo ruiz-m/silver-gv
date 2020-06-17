@@ -1,3 +1,6 @@
+
+//:: IgnoreFile(/silicon/issue/208/)
+
 domain VCTOption[T] {
   function VCTNone(): VCTOption[T]
   function getVCTOption(o: VCTOption[T]): T

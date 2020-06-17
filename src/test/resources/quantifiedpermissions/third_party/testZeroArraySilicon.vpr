@@ -19,7 +19,7 @@ method ZeroArray__zero_array(diz: Ref, current_thread_id: Int, ar: Seq[Ref])
   while (i < N)
     invariant (0 <= i) && (i <= N) && (N == |ar|)
     invariant (forall k: Int :: (0 <= k) && (k < |ar|) ==> acc(ar[k].Ref__Integer_value, write))
-    invariant (forall k: Int :: (0 <= k) && (k < i) ==> (ar[k].Ref__Integer_value == 0)) 
+    invariant (forall k: Int :: (0 <= k) && (k < i) ==> (ar[k].Ref__Integer_value == 0))
   {
     __flatten_1 := ar[i]
     __flatten_2 := 0
@@ -27,7 +27,7 @@ method ZeroArray__zero_array(diz: Ref, current_thread_id: Int, ar: Seq[Ref])
     i := i + 1
   }
 }
-
+/*
 method ZeroArray__ZeroArray(current_thread_id: Int) returns (sys__result: Ref)
   requires current_thread_id >= 0
   ensures sys__result != null
@@ -37,4 +37,4 @@ method ZeroArray__ZeroArray(current_thread_id: Int) returns (sys__result: Ref)
   sys__result := diz
   assert sys__result != null
   inhale false
-}
+}*/

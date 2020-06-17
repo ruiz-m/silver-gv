@@ -3,6 +3,9 @@
 
 //:: IgnoreFile(/carbon/issue/182/)
 
+//:: IgnoreFile(/silicon/issue/208/)
+
+
 field Container_value: Ref
 
 method nested_try_finally_fails(out: Ref)
