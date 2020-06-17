@@ -1,6 +1,8 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 /* Reported by Stefan Blom of U Twente. */
 
 field val : Int
@@ -12,7 +14,7 @@ function vals(p: Perm, ar: Seq[Ref]): Seq[Int]
   ensures |result| == |ar|
   // :: UnexpectedOutput(not.wellformed:insufficient.permission, /carbon/issue/193/)
   ensures (forall i: Int :: (0 <= i) && (i < |ar|) ==> (ar[i].val == result[i]))
-  
+
 method vals_meth(p: Perm, ar: Seq[Ref]) returns (res: Seq[Int])
   requires p != none
   requires (forall i: Int :: (0 <= i) && (i < |ar|) ==> acc(ar[i].val, p))

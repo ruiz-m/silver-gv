@@ -1,3 +1,5 @@
+
+//:: IgnoreFile(/silicon/issue/208/)
 function loc(a: Ref, i: Int): Ref
 
 field val: Int

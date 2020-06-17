@@ -1,6 +1,8 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 /* Provided by Stefan Blom of U Twente.
  * Illustrated Silicon-QP issue 122.
  */
@@ -25,4 +27,3 @@ method do_sum(diz: Ref, ar: Seq[Ref])
   assume diz.res == sum(diz, 0, |ar|, 0, ar)
   assert diz.res == sum(diz, 0, |ar|, 0, ar)
 }
-

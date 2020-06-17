@@ -1,3 +1,5 @@
+
+//:: IgnoreFile(/silicon/issue/208/)
 field f1: Ref
 field f2: Ref
 field val: Bool

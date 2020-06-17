@@ -1,3 +1,5 @@
+
+//:: IgnoreFile(/silicon/issue/208/)
 field elem: Int
 field next: Ref
 

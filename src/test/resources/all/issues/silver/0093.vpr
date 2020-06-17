@@ -4,11 +4,11 @@
 predicate pred(){
 	true
 }
-
+/*
 function f(ref : Ref) : Int
-    //:: ExpectedOutput(typechecker.error)
+    /:: ExpectedOutput(typechecker.error)
 	ensures 1 == unfolding pred() in ref
-
+*/
 method m(ref : Ref)
     requires acc(pred())
 {

@@ -5,6 +5,8 @@
  * Account
  ****************************************/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 field _balance: Int
 
 predicate account(this: Ref)

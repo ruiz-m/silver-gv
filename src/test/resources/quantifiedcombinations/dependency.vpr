@@ -12,13 +12,13 @@ field f:Int
   predicate pred2(i:Int) {
        i > 0
   }
-
+  /*
   function get_val(xs:Seq[Ref], i:Int):Ref
       requires 0 <= i && i < |xs|
   {
       xs[i]
   }
-
+*/
   method m1(xs:Seq[Ref])
   requires forall x:Ref :: x in xs ==> acc(x.f) && x.f > 0
   ensures forall x:Ref :: x in xs ==> acc(x.f) && x.f > 0

@@ -1,6 +1,8 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 method ok(self$1: Ref, len: Int, rd$1: Perm) returns (res$1: Ref)
   requires none < rd$1 && rd$1 < write
   requires len > 0

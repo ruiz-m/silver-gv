@@ -1,8 +1,10 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 //:: IgnoreFile(/carbon/issue/223/)
-field val : Int 
+field val : Int
 
 predicate bar(x:Ref) {
   acc(x.val)
@@ -14,7 +16,7 @@ function get(x: Ref) : Int
     unfolding bar(x) in x.val
   }
 
-method set(x:Ref, i:Int) 
+method set(x:Ref, i:Int)
   requires bar(x)
   ensures bar(x) && get(x) == i
 

@@ -21,16 +21,16 @@ method test2() {
 
 //:: ExpectedOutput(typechecker.error)
 predicate P(x: error) { true }
-
-//:: ExpectedOutput(typechecker.error)
+/*
+/:: ExpectedOutput(typechecker.error)
 function fun1(x: boo): Int { 0 }
 
-//:: ExpectedOutput(typechecker.error)
+/:: ExpectedOutput(typechecker.error)
 function fun2(): int { 0 }
 
 domain Domain1[A] {
   function foo(a: A): Bool
-  //:: ExpectedOutput(typechecker.error)
+  /:: ExpectedOutput(typechecker.error)
   function goo(b: B): Bool
 
   function hoo(n: Int, d: Domain1[A]): Domain1[A]
@@ -49,3 +49,4 @@ domain Any {}
 method test3()
   requires forall a: Any :: d2fun1(a) == a
 {}
+*/

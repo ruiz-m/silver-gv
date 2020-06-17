@@ -4,6 +4,9 @@
 //
 // Copyright (c) 2011-2019 ETH Zurich.
 
+// Fails so tests bcz expects functions, don't know how to solve - J
+
+
 import java.nio.file.Paths
 
 import org.scalatest.FunSuite

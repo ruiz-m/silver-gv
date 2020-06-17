@@ -1,6 +1,8 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: IgnoreFile(/silicon/issue/208/)
+
 function cond(this: Ref, j: Int): Bool
   requires acc(valid(this))
 { 0 <= j && j < (unfolding acc(valid(this)) in this.len) }

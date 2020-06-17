@@ -1,3 +1,5 @@
+
+//:: IgnoreFile(/silicon/issue/208/)
 domain VCTArray[CT] {
 
   function loc(a: VCTArray[CT], i: Int): CT

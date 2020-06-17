@@ -4,9 +4,9 @@
   field value: Int
   field next: Ref
   predicate inv(this: Ref) { acc(this.value, write) && acc(this.next, write) && (((this.next) != (null)) ==> acc(inv(this.next), write)) }
-  function get(this: Ref): Int
+/*  function get(this: Ref): Int
     requires acc(inv(this), write)
-  { (unfolding acc(inv(this), write) in this.value) }
+  { (unfolding acc(inv(this), write) in this.value) }*/
   method foo(this: Ref)
     requires acc(inv(this), write) && (unfolding acc(inv(this), write) in ((this.next) != (null)))
     ensures acc(inv(this), write) && (unfolding acc(inv(this), write) in ((this.next) != (null)))

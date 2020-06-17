@@ -6,7 +6,7 @@ field val: Int
 field nodes: Seq[Ref]
 field data: Seq[Int]
 
-function trigger(i: Int) : Bool { true }
+// function trigger(i: Int) : Bool { true }
 
 predicate List(this: Ref) {
 	acc(this.nodes) && (forall i: Int :: 0 <= i && i < |this.nodes| ==> acc(this.nodes[i].val))

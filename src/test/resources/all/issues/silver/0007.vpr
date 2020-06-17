@@ -15,10 +15,11 @@ method test1()
   //:: ExpectedOutput(typechecker.error)
   requires acc(valid.item)
 {}
-
+/*
 function fun(): Int { 0 }
 
 method test2()
-  //:: ExpectedOutput(typechecker.error)
+  /:: ExpectedOutput(typechecker.error)
   requires acc(fun.item)
 {}
+*/

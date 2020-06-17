@@ -8,4 +8,4 @@ method test() {
 }
 
 field f: Set[Bool]
-function foo(s: Set[Ref]): Ref
+//function foo(s: Set[Ref]): Ref

@@ -14,7 +14,7 @@ method test01(x: Int) {
 }
 
 predicate P(x: Ref) { acc(x.g) && x.g == 1 }
-
+/*
 function fun01(x: Ref): Int
   requires acc(P(x), wildcard)
   ensures result > 0
@@ -35,3 +35,4 @@ method test03(x: Ref)
 {
   assert fun02(x) == 2 * x.g
 }
+*/

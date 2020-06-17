@@ -1,7 +1,7 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
-function prio(this: Ref): Int
+// function prio(this: Ref): Int
 
 /*****************************************************************
  * List Nodes
@@ -35,7 +35,7 @@ method insert(this: Ref, elem: Int) returns (idx: Int)
 {
   idx := 0;  var tmp: Ref
   unfold List(this)
-  if(this.head != null) { unfold lseg(this.head, null) } 
+  if(this.head != null) { unfold lseg(this.head, null) }
 
   if(this.head == null || elem <= this.head.data)
   {

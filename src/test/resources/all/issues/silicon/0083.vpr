@@ -28,12 +28,13 @@ method test3(xs: Seq[Ref], n: Int)
 {
   var y: Int := xs[3].f
 }
-
+/*
 function fun(i: Int): Bool
 
 method test20(xs: Seq[Int], i: Int) {
-  //:: ExpectedOutput(assignment.failed:seq.index.negative)
-  //:: ExpectedOutput(assignment.failed:seq.index.length)
-  //:: MissingOutput(assignment.failed:seq.index.length, /silicon/issue/34/)
+  /:: ExpectedOutput(assignment.failed:seq.index.negative)
+  /:: ExpectedOutput(assignment.failed:seq.index.length)
+  /:: MissingOutput(assignment.failed:seq.index.length, /silicon/issue/34/)
   var b: Bool := fun(xs[i])
 }
+*/

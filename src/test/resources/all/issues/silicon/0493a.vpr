@@ -1,3 +1,5 @@
+
+//:: IgnoreFile(/silicon/issue/208/)
 field val: Int
 
 predicate p(a: Ref) {

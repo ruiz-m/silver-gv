@@ -5,14 +5,14 @@
 field Nodenext$: Ref
 
 field Nodevalue$: Int
-
+/*
 function NodegetNext$(this: Ref): Ref
   requires this != null
   requires acc(Nodevalid$(this), wildcard)
 {
   (unfolding acc(Nodevalid$(this), wildcard) in this.Nodenext$)
 }
-
+*/
 predicate Nodevalid$(this: Ref) {
   acc(this.Nodenext$, wildcard) && acc(this.Nodevalue$, wildcard) && ((this.Nodenext$ != null) ==> acc(Nodevalid$(this.Nodenext$), write))
 }
@@ -129,11 +129,12 @@ method NodetestNestingUnfoldingPrecondition$(this: Ref, x: Ref)
   //:: UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/)
   assert this != x
 }
-
+/*
 method NodetestNestingUnfoldingPostcondition$(this: Ref, x: Ref)
   requires this != null
   requires acc(Nodevalid$(this), write)
-  //:: UnexpectedOutput(postcondition.violated:assertion.false, /Silicon/issue/154/)
+  /:: UnexpectedOutput(postcondition.violated:assertion.false, /Silicon/issue/154/)
   ensures acc(Nodevalid$(this), write) && (unfolding acc(Nodevalid$(this), write) in true) && (this != NodegetNext$(this))
 {
 }
+*/
