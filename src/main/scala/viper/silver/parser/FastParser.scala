@@ -766,7 +766,8 @@ object FastParser extends PosParser[Char, String] {
 
   lazy val realMagicWandExp: P[PMagicWandExp] = P(orExp ~ "--*".! ~ exp).map { case (a,_,c) => PMagicWandExp(a,c)}
 
-  lazy val implExp: P[PExp] = P(magicWandExp ~ (StringIn("==>").! ~ implExp).?).map { case (a, b) => b match {
+  // jumped over magicWandExp
+  lazy val implExp: P[PExp] = P(orExp ~ (StringIn("==>").! ~ implExp).?).map { case (a, b) => b match {
     case Some(c) => PBinExp(a, c._1, c._2)
     case None => a
   }
@@ -844,7 +845,8 @@ object FastParser extends PosParser[Char, String] {
     acc
   }))
 
-  lazy val resAcc: P[PResourceAccess] = P(locAcc | realMagicWandExp)
+  // pruned realMagicWandExp
+  lazy val resAcc: P[PResourceAccess] = P(locAcc)
 
   lazy val locAcc: P[PLocationAccess] = P(fieldAcc | predAcc)
 
