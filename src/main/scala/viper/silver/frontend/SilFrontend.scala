@@ -106,7 +106,7 @@ trait SilFrontend extends DefaultFrontend {
     _ver = verifier
   }
 
-  def prepare(args: Seq[String]): Boolean = {
+  def prepare(args: Seq[String]): Boolean ={
 
     reporter report CopyrightReport(s"${_ver.signature}\n")//${_ver.copyright}") // we agreed on 11/03/19 to drop the copyright
 

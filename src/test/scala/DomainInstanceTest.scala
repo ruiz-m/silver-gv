@@ -4,6 +4,11 @@
 //
 // Copyright (c) 2011-2019 ETH Zurich.
 
+// tests are about domains
+
+/*
+
+
 import java.nio.file.Paths
 import TestHelpers.MockSilFrontend
 import org.scalatest.{FunSuite, Matchers}
@@ -96,3 +101,4 @@ class DomainInstanceTest extends FunSuite with Matchers {
     }
   }
 }
+*/

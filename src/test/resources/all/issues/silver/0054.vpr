@@ -31,4 +31,3 @@ method m3(obj: Ref)
         i := i - obj.f
     }
 }
-

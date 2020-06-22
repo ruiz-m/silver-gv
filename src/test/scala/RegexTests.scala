@@ -149,6 +149,9 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     files foreach { name => executeTest(filePrefix, name, strat, frontend)}
   }
 
+
+  // test uses ==>
+/*
   test("PresentationSlides") {
 
     val filePrefix = "transformations/PresentationSlides/"
@@ -175,7 +178,10 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     val frontend = new MockSilFrontend
     files foreach { name => executeTest(filePrefix, name, strat, frontend) }
   }
+*/
 
+  // test uses GoTo
+/*
   test("WhileToIfAndGoto") {
     val filePrefix = "transformations/WhileToIfAndGoto/"
     val files = Seq("simple", "nested")
@@ -205,6 +211,7 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     }
     }
   }
+*/
 
   // test file "interrupted" contains inhale
   // test file "nestedBlocks" contains macros

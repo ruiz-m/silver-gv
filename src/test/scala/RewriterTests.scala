@@ -166,6 +166,9 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
     }
   } */
 
+
+  // Tests rely on ==>
+/*
   test("ImplicationToDisjunctionTests") {
     val filePrefix = "transformations/ImplicationsToDisjunction/"
     val files = Seq("simple", "nested", "traverseEverything")
@@ -180,7 +183,10 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
     val frontend = new MockSilFrontend
     files foreach { name => executeTest(filePrefix, name, strat, frontend) }
   }
+*/
 
+  // Tests insert a GoTo
+/*
   test("WhileToIfAndGoto") {
     val filePrefix = "transformations/WhileToIfAndGoto/"
     val files = Seq("simple", "nested")
@@ -211,7 +217,7 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
       }
     }
   }
-
+*/
   // test file "interrupted" contains inhale
   // test file "nestedBlocks" contains macros
   test("ManyToOneAssert") {
@@ -381,6 +387,8 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
   }
   */
 
+  // test relies on ==>
+/*
   test("ImplicationSimplification") {
     val filePrefix = "transformations/ImplicationSimplification/"
     val files = Seq("simple", "complex")
@@ -412,7 +420,7 @@ class RewriterTests extends FunSuite with FileComparisonHelper {
     val frontend = new MockSilFrontend
     files foreach { name => executeTest(filePrefix, name, combined, frontend) }
   }
-
+*/
   test("IfThenElseTest") {
     val filePrefix = "transformations/IfThenElseTest/"
     val files = Seq("complex")

@@ -5,7 +5,7 @@
 method test()
     ensures (
         true
-        --*
+          --*
         let tmp2 == (
             true
             ) in (

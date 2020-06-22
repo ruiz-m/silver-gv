@@ -146,3 +146,15 @@ method testBodyless()
     x := bodyless()
     assert 0 <= x && x < 10
 }
+
+
+method getRandomNumber() returns (b: Int)
+{
+  b := 4
+}
+method meth(a: Int) returns (b: Int)
+requires a > 0
+ensures b > 0
+{
+    b := a * getRandomNumber()
+}

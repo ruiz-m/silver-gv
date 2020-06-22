@@ -17,7 +17,7 @@ class IOTests extends FunSuite with Matchers {
 
   val test_prefix = s"Test standard IO of SilFrontend"
 
-  val verifiableFile = "all/basic/let.vpr"
+  val verifiableFile = "all/basic/elsif.vpr"
   val nonExistingFile = "bla/bla/bla.vpr"
 
   test(s"$test_prefix: some output is produces") {

@@ -49,4 +49,3 @@ method test05(p: Perm, i: Int, r: Ref) returns (q: Perm)
   q := p/i
   assert q > none
 }
-
