@@ -732,7 +732,7 @@ object FastParser extends PosParser[Char, String] {
  *  seqRange, perm
  */
   lazy val atom: P[PExp] = P(ParserExtension.newExpAtStart | integer | booltrue | boolfalse | nul
-    | old | result | unExp
+    | old | result | unExp | fapp | typedFapp
     | "(" ~ exp ~ ")" | accessPred | unfolding | applying
     | idnuse | ParserExtension.newExpAtEnd)
 
@@ -856,7 +856,7 @@ object FastParser extends PosParser[Char, String] {
   lazy val resAcc: P[PResourceAccess] = P(locAcc)
 
   //pruned predAcc
-  lazy val locAcc: P[PLocationAccess] = P(fieldAcc)
+  lazy val locAcc: P[PLocationAccess] = P(fieldAcc | predAcc)
 
   lazy val fieldAcc: P[PFieldAccess] =
     P(NoCut(realSuffixExpr.filter(isFieldAccess)).map {
@@ -926,7 +926,13 @@ object FastParser extends PosParser[Char, String] {
  *      PAccPred(loc, perm)
  *  })
  */
-  lazy val predicateAccessPred: P[PAccPred] = P(accessPred)
+   lazy val predicateAccessPred: P[PAccPred] = P(accessPred | predAcc.map (
+    loc => {
+      val perm = PFullPerm()
+      FastPositions.setStart(perm, loc.start)
+      FastPositions.setFinish(perm, loc.finish)
+      PAccPred(loc, perm)
+  }))
 
   lazy val setTypedEmpty: P[PExp] = collectionTypedEmpty("Set", PEmptySet)
 

@@ -1,7 +1,6 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
-
 method t1() returns ()
 {
     assert (1 == (1 * 1))
@@ -35,8 +34,6 @@ method t4() {
 
 method t5() {
     assert 2/3 == 0 // 2/3 is interpreted as integer division
-    //:: ExpectedOutput(assert.failed:assertion.false)
-    assert 2/3 == none
 }
 
 method t6() {
