@@ -3,6 +3,7 @@ import TestHelpers.MockSilFrontend
 import org.scalatest.FunSuite
 import viper.silver.ast._
 import java.io.File
+import scala.io.Source
 
 // Class that tests every step up to and including Translation
 
@@ -25,8 +26,23 @@ class MyTests extends FunSuite {
 
     val fullLoc = loc + "/" + file
 
-    test("testing " + fullLoc) {
-      parse(fullLoc, frontend)
+    val fileStream = getClass.getResourceAsStream(fullLoc)
+    assert(fileStream != null, s"File $fullLoc not found")
+    val lines = Source.fromInputStream(fileStream).getLines
+
+    var ignore = false
+
+    lines.foreach(line =>
+      if (line.startsWith("//:: IgnoreFile(/silicon"))
+        ignore = true
+    )
+
+    if (ignore) {
+      println("ignoring " + fullLoc)
+    } else {
+      test("testing " + fullLoc) {
+        parse(fullLoc, frontend)
+      }
     }
   }
 
