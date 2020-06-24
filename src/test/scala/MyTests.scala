@@ -4,37 +4,45 @@ import org.scalatest.FunSuite
 import viper.silver.ast._
 import java.io.File
 
+// Class that tests every step up to and including Translation
 
 class MyTests extends FunSuite {
 
+  // List of folders to test, all must be paths back to resources ("transformations" or "all/basic" for example)
+  val foldersToTest = Seq("all/basic")
 
-  //test("going big") {
-    //val testDirectories: Seq[String] =   Seq("all", "quantifiedpermissions", "quantifiedpredicates", "quantifiedcombinations", "termination", "examples")
-      //val path = Paths.get("..", "resources", "all", "basic")
-      val frontend = new MockSilFrontend
+  // Main method
+  private def testAFolder(loc: String) {
+    val path = getClass.getResource(loc)
+    val folder = new File(path.getPath)
+    recursiveListFiles(folder, loc)
+  }
 
-      val test = getClass.getResource("all/basic/abstract_funcs_and_preds.vpr")
-      if (test != null) println(test.getPath)
-      else println("woops")
+  // starts a test for a file
+  // requites the file's name and it's path back to resources
+  private def testAFile(loc: String, file: String) {
+    val frontend = new MockSilFrontend
 
-      val path = getClass.getResource("all/basic")
-      val folder = new File(path.getPath)
-      if (folder.exists && folder.isDirectory)
-        folder.listFiles
-          .toList
-          .foreach(file =>
-            test("testing" + file.getName) {
-              parse("all/basic/" + file.getName, frontend)
-            }
-          )
+    val fullLoc = loc + "/" + file
 
-    //  parse(fileName, frontend)
-//  }
+    test("testing " + fullLoc) {
+      parse(fullLoc, frontend)
+    }
+  }
 
-
-  private def recursiveListFiles(f: File): Array[File] = {
+  // recursively decends folders and tests all files in them
+  // builds a path back to resources as it does so
+  private def recursiveListFiles(f: File, path: String) {
     val these = f.listFiles
-    these ++ these.filter(_.isDirectory).flatMap(recursiveListFiles)
+    assert(these != null, s"Folder $f not found")
+
+    // testing of each file
+    these.toList.filter(_.isFile)
+      .foreach(file => testAFile(path, file.getName))
+
+    // recursive calls to each subfolder
+    these.toList.filter(_.isDirectory)
+      .foreach(folder => recursiveListFiles(folder, path + "/" + folder.getName))
   }
 
 
@@ -43,13 +51,16 @@ class MyTests extends FunSuite {
     val fileRes = getClass.getResource(testFile)
     assert(fileRes != null, s"File $testFile not found")
     val file = Paths.get(fileRes.toURI)
-    print("halibut\n")
     var targetNode: Node = null
 
+    //translate is in TestHelpers.scala and does every stage up to and including Translation on a file
     frontend.translate(file) match {
       case (Some(p), _) => targetNode = p
       case (None, errors) => sys.error("Error occurred during translating: " + errors)
     }
     assert (targetNode != null)
   }
+
+  foldersToTest.foreach(folder => testAFolder(folder))
+  //testAFolder(foldersToTest)
 }
