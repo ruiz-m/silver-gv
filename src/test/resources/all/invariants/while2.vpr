@@ -7,7 +7,7 @@ method test00(x: Ref) returns (b: Bool)
   requires acc(x.f)
 {
   while (b)
-    invariant b ==> acc(x.f, 1/2)
+    invariant (b ? acc(x.f, 1) : true) // 1/2
   {
     b := !b
   }

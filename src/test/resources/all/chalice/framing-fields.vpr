@@ -3,7 +3,7 @@
 
   field value: Int
   field next: Ref
-  predicate valid(this: Ref) { acc(this.value, write) && acc(this.next, write) && (((this.next) != (null)) ==> acc(valid(this.next), write)) }
+  predicate valid(this: Ref) { acc(this.value, write) && acc(this.next, write) && (((this.next) != (null)) ? acc(valid(this.next), write) : true) }
   method set(this: Ref, x: Int, y: Int)
     requires acc(valid(this), write)
     ensures acc(valid(this), write)

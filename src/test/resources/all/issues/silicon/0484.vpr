@@ -2,9 +2,8 @@ field left: Ref
 field right: Ref
 
 predicate treePerm_simpler(current: Ref) {
-  current != null ==>
-    acc(current.left) &&
-    true
+  current != null ?
+    acc(current.left) && true : true
 }
 
 method insert_simpler(current: Ref, bool_val: Bool)

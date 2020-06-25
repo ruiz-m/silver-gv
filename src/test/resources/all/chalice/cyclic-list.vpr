@@ -7,7 +7,7 @@ field next: Ref
 predicate valid(this: Ref) {
      acc(this.value, write)
   && acc(this.next, write)
-  && (((this.next) != (null)) ==> acc(valid(this.next), write))
+  && (((this.next) != (null)) ? acc(valid(this.next), write) : true)
 }
 /*
 function length(this: Ref): Int

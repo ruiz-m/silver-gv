@@ -8,7 +8,7 @@ method test01(x: Ref) returns (b: Bool)
   ensures  acc(x.f) && x.f == old(x.f)
 {
   while (b)
-    invariant acc(x.f, 1/2)
+    invariant acc(x.f, 1) // 1/2
   {
     b := !b
   }
@@ -17,7 +17,7 @@ method test01(x: Ref) returns (b: Bool)
 method test02(x: Ref) returns (b: Bool) {
   while (b)
     //:: ExpectedOutput(invariant.not.established:insufficient.permission)
-    invariant acc(x.f, 1/2)
+    invariant acc(x.f, 1) // 1/2
   {
     b := !b
   }

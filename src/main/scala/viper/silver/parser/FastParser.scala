@@ -964,9 +964,9 @@ object FastParser extends PosParser[Char, String] {
   }
 
   // pruned lbl, goto, exhale, inhale, packageWand, applyWand, macroassign, defineDecl, macroref, assume, newstmt
-  lazy val stmt: P[PStmt] = P(ParserExtension.newStmtAtStart | methodCall | fieldassign | localassign | fold | unfold | assertP | ifthnels | whle | varDecl | block | ParserExtension.newStmtAtEnd)
+  lazy val stmt: P[PStmt] = P(ParserExtension.newStmtAtStart | methodCall | fieldassign | localassign | fold | unfold | assertP | ifthnels | whle | varDecl | newstmt | block | ParserExtension.newStmtAtEnd)
 
-  lazy val nodefinestmt: P[PStmt] = P(ParserExtension.newStmtAtStart | methodCall | fieldassign | localassign | fold | unfold | assertP | ifthnels | whle | varDecl | block | ParserExtension.newStmtAtEnd)
+  lazy val nodefinestmt: P[PStmt] = P(ParserExtension.newStmtAtStart | methodCall | fieldassign | localassign | fold | unfold | assertP | ifthnels | whle | varDecl | newstmt | block | ParserExtension.newStmtAtEnd)
 
   lazy val macroref: P[PMacroRef] = P(idnuse).map(a => PMacroRef(a))
 

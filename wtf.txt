@@ -1,0 +1,31 @@
+[info] Loading settings for project silver-gv-build from plugins.sbt ...
+[info] Loading project definition from C:\Users\jacob\Desktop\REUSE\silver-gv\project
+[info] Loading settings for project silver from build.sbt ...
+[info] Set current project to silver (in build file:/C:/Users/jacob/Desktop/REUSE/silver-gv/)
+ignoring all/basic/abstract_funcs_and_preds.vpr
+ignoring all/basic/consistency1.vpr
+ignoring all/basic/func.vpr
+ignoring all/basic/func2.vpr
+ignoring all/basic/func3.vpr
+ignoring all/basic/funcpred.vpr
+ignoring all/basic/goto.vpr
+ignoring all/basic/inex.vpr
+ignoring all/basic/let.vpr
+ignoring all/basic/let_consistency_resolver.vpr
+ignoring all/basic/let_consistency_typechecker.vpr
+ignoring all/basic/many_conjuncts.vpr
+ignoring all/basic/names.vpr
+ignoring all/basic/quantifiers.vpr
+ignoring all/basic/regression1.vpr
+ignoring all/basic/syntax2.vpr
+ignoring all/basic/unique.vpr
+[info] FullSilverTests:
+[info] - testing all/basic/abstract_funcs_and_preds_consistency.vpr
+[info] - testing all/basic/arithmetic.vpr
+[info] - testing all/basic/assert.vpr
+[info] - testing all/basic/disjunction_fast_20.vpr
+[info] - testing all/basic/disjunction_slow_20.vpr
+[info] - testing all/basic/elsif.vpr
+[info] - testing all/basic/fold.vpr
+[info] - testing all/basic/heap.vpr
+Terminate batch job (Y/N)? 

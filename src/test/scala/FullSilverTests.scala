@@ -7,10 +7,10 @@ import scala.io.Source
 
 // Class that tests every step up to and including Translation
 
-class MyTests extends FunSuite {
+class FullSilverTests extends FunSuite {
 
   // List of folders to test, all must be paths back to resources ("transformations" or "all/basic" for example)
-  val foldersToTest = Seq("all/basic")
+  val foldersToTest = Seq("all")
 
   // Main method
   private def testAFolder(loc: String) {
@@ -26,22 +26,28 @@ class MyTests extends FunSuite {
 
     val fullLoc = loc + "/" + file
 
+    // gets all the lines of the file
     val fileStream = getClass.getResourceAsStream(fullLoc)
     assert(fileStream != null, s"File $fullLoc not found")
     val lines = Source.fromInputStream(fileStream).getLines
 
     var ignore = false
+    var fail = false
 
+    // if the file has an ignore tag, then don't test it
+    // if it has a typechecker error, it should fail to parse
     lines.foreach(line =>
       if (line.startsWith("//:: IgnoreFile(/silicon"))
         ignore = true
+      else if (line.trim.startsWith("//:: ExpectedOutput(typechecker.error)"))
+        fail = true
     )
 
     if (ignore) {
       println("ignoring " + fullLoc)
     } else {
       test("testing " + fullLoc) {
-        parse(fullLoc, frontend)
+        parse(fullLoc, frontend, fail)
       }
     }
   }
@@ -62,21 +68,24 @@ class MyTests extends FunSuite {
   }
 
 
-  private def parse(testFile: String, frontend: MockSilFrontend): Unit = {
+  private def parse(testFile: String, frontend: MockSilFrontend, shouldFail: Boolean): Unit = {
 
     val fileRes = getClass.getResource(testFile)
     assert(fileRes != null, s"File $testFile not found")
     val file = Paths.get(fileRes.toURI)
     var targetNode: Node = null
 
+
     //translate is in TestHelpers.scala and does every stage up to and including Translation on a file
     frontend.translate(file) match {
       case (Some(p), _) => targetNode = p
-      case (None, errors) => sys.error("Error occurred during translating: " + errors)
+      case (None, errors) => if (!shouldFail)
+                              sys.error("Error occurred during translating: " + errors)
     }
-    assert (targetNode != null)
-  }
+
+    if (targetNode != null) assert(!shouldFail, s"\n$testFile should fail, but didn't")
+    else                    assert(shouldFail)
+}
 
   foldersToTest.foreach(folder => testAFolder(folder))
-  //testAFolder(foldersToTest)
 }

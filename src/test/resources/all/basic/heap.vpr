@@ -41,16 +41,15 @@ method set_f(monitor: Ref, value: Ref)
 {
   monitor.f := value
 }
-
+/*
 method t2(r: Ref) {
   if (r != null) {
     assert perm(r.f) == none
   } else {
     assert perm(r.f) == none
-      /* Still expected to pass - perm(e.f) does not require e != null */
   }
 }
-
+*/
 method t3(r:Ref) returns (res:Ref)
     requires r!=null
     requires acc(r.f)

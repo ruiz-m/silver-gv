@@ -2,6 +2,7 @@
 // http://creativecommons.org/publicdomain/zero/1.0/
 
 
+
 field f: Int
 
 method t1() {
@@ -65,9 +66,9 @@ method t5_a(r: Ref)
      requires r.f == 2
  {
  }
-
+/*
 method t6_a(r: Ref)
-    //:: ExpectedOutput(not.wellformed:insufficient.permission)
+    /:: ExpectedOutput(not.wellformed:insufficient.permission)
     ensures r.f == 2
 {
     assume false
@@ -75,12 +76,12 @@ method t6_a(r: Ref)
 
 method t6_b(r: Ref)
     ensures r != null
-    //:: ExpectedOutput(not.wellformed:insufficient.permission)
+    /:: ExpectedOutput(not.wellformed:insufficient.permission)
     ensures r.f == 2
 {
     assume false
 }
-
+*/
 /*
 method t7(r: Ref)
     requires acc(r.f, write)
@@ -134,27 +135,4 @@ method t11() returns (r: Ref)
     x := t11()
     y := new()
     assert x != y
-}
-
-method bodyless() returns (r: Int)
-    requires true
-    ensures 0 <= r && r < 10
-
-method testBodyless()
-{
-    var x: Int
-    x := bodyless()
-    assert 0 <= x && x < 10
-}
-
-
-method getRandomNumber() returns (b: Int)
-{
-  b := 4
-}
-method meth(a: Int) returns (b: Int)
-requires a > 0
-ensures b > 0
-{
-    b := a * getRandomNumber()
 }
