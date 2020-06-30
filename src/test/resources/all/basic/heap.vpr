@@ -14,7 +14,7 @@ method t0() {
     assert c.f != c // This assertion was expected true in an old version of the test case, but should fail
 }
 
-/*
+
 // test aliasing of heap values with other objects
 method t1() {
     var a: Ref
@@ -32,7 +32,7 @@ method t1() {
     /:: ExpectedOutput(assert.failed:assertion.false)
     assert a.f != c
 }
-*/
+
 
 method set_f(monitor: Ref, value: Ref)
   requires acc(monitor.f, write)
@@ -41,7 +41,7 @@ method set_f(monitor: Ref, value: Ref)
 {
   monitor.f := value
 }
-/*
+
 method t2(r: Ref) {
   if (r != null) {
     assert perm(r.f) == none
@@ -49,7 +49,7 @@ method t2(r: Ref) {
     assert perm(r.f) == none
   }
 }
-*/
+
 method t3(r:Ref) returns (res:Ref)
     requires r!=null
     requires acc(r.f)

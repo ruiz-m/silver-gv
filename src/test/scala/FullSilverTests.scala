@@ -34,13 +34,18 @@ class FullSilverTests extends FunSuite {
     var ignore = false
     var fail = false
 
+    val depricated = Seq("domain", "define", "function", "goto", "label", "package", "==>", "<==>", "assume", "axiom", "inhale", "exhale")
     // if the file has an ignore tag, then don't test it
     // if it has a typechecker error, it should fail to parse
     lines.foreach(line =>
-      if (line.startsWith("//:: IgnoreFile(/silicon"))
-        ignore = true
+      if (line.trim.startsWith("//:: IgnoreFile(/silicon"))
+        ignore = false
       else if (line.trim.startsWith("//:: ExpectedOutput(typechecker.error)"))
         fail = true
+      else
+        depricated.foreach(word =>
+          if (!fail && line.trim.startsWith(word))
+            fail = true)
     )
 
     if (ignore) {

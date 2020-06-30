@@ -1,5 +1,6 @@
-method m1() {}
+field f: Ref
 
-method m2() { var x : Int ; x := 2}
+method m1() {
+  var x: Int := x.f
 
-method m3() { var x : Int := 2 }
+}
