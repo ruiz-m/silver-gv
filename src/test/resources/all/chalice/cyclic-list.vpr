@@ -9,18 +9,7 @@ predicate valid(this: Ref) {
   && acc(this.next, write)
   && (((this.next) != (null)) ? acc(valid(this.next), write) : true)
 }
-/*
-function length(this: Ref): Int
-  requires acc(valid(this), write)
-  ensures result > 0
-{ (unfolding acc(valid(this), write) in (((this.next) == (null)) ? 1 : 1 + length(this.next))) }
 
-function itemAt(this: Ref, i: Int): Int
-  requires acc(valid(this), write)
-  requires 0 <= i
-  requires i < length(this)
-{ (unfolding acc(valid(this), write) in (((i) == (0)) || ((this.next) == (null)) ? this.value : itemAt(this.next, i - 1))) }
-*/
 method test1(this: Ref)
 {
   var x: Ref
@@ -31,16 +20,3 @@ method test1(this: Ref)
   //:: ExpectedOutput(fold.failed:insufficient.permission)
   fold acc(valid(x), write)
 }
-/*
-method test2(this: Ref)
-{
-  var x: Ref
-
-  x := new(value, next)
-  x.next := x
-
-  /:: ExpectedOutput(application.precondition:insufficient.permission)
-  /:: IgnoreOthers
-  assert ((length(x)) == (length(x.next) + 1))
-}
-*/

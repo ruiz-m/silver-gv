@@ -3,11 +3,7 @@
 
 
 field f: Int
-/*
-domain Test {
-    function func(a: Int): Int
-}
-*/
+
 method t1_a(this: Ref)
 {
     //:: ExpectedOutput(assignment.failed:insufficient.permission)
@@ -20,20 +16,6 @@ method t1_b(this: Ref)
     //:: ExpectedOutput(assignment.failed:insufficient.permission)
     var i: Int := this.f
 }
-/*
-method t2_a(this: Ref)
-{
-    /:: ExpectedOutput(assignment.failed:insufficient.permission)
-    var i: Int := func(this.f)
-}
-
-method t2_b(this: Ref)
-  requires this != null
-{
-    /:: ExpectedOutput(assignment.failed:insufficient.permission)
-    var i: Int := func(this.f)
-}
-*/
 method t4_a(this: Ref)
 {
     //:: ExpectedOutput(assignment.failed:insufficient.permission)

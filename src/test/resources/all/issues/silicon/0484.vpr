@@ -16,24 +16,3 @@ method insert_simpler(current: Ref, bool_val: Bool)
   assert
     current != null || unfolding acc(treePerm_simpler(current)) in true
 }
-
-
-/* Originally reported example */
-/*
-predicate treePerm(current: Ref) {
-  current != null
-          ==> acc(current.left, write)
-              && acc(current.right, write)
-}
-
-method insert(current: Ref, bool_val: Bool)
-  requires acc(treePerm(current), write)
-  requires bool_val == true
-{
-  unfold acc(treePerm(current), write)
-  fold acc(treePerm(current), write)
-  assert (bool_val == true
-          || (unfolding acc(treePerm(current), write) in true )
-          )
-}
-*/

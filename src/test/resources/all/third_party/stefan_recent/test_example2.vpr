@@ -29,18 +29,7 @@ method Loop__incr(diz: Ref, current_thread_id: Int, c: Ref, y: Int)
     i := i + 1
   }
 }
-/*
-method Loop__Loop(current_thread_id: Int) returns (sys__result: Ref)
-  requires current_thread_id >= 0
-  ensures sys__result != null
-{
-  var diz: Ref
-  diz := new()
-  sys__result := diz
-  assert sys__result != null
-  inhale false
-}
-*/
+
 method Counter__incr(diz: Ref, current_thread_id: Int)
   requires diz != null
   requires current_thread_id >= 0
@@ -54,20 +43,3 @@ method Counter__incr(diz: Ref, current_thread_id: Int)
   __flatten_5 := __flatten_2
   diz.Counter__x := __flatten_5
 }
-/*
-method Counter__Counter(current_thread_id: Int) returns (sys__result: Ref)
-  requires current_thread_id >= 0
-  ensures sys__result != null
-  ensures acc(sys__result.Counter__x, write) && (sys__result.Counter__x == 0)
-{
-  var diz: Ref
-  var __flatten_3: Int
-  var __flatten_6: Int
-  diz := new(Counter__x)
-  __flatten_3 := 0
-  __flatten_6 := __flatten_3
-  diz.Counter__x := __flatten_6
-  sys__result := diz
-  assert (sys__result != null) && (acc(sys__result.Counter__x, write) && (sys__result.Counter__x == 0))
-  inhale false
-}*/

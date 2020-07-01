@@ -10,7 +10,7 @@ import scala.io.Source
 class FullSilverTests extends FunSuite {
 
   // List of folders to test, all must be paths back to resources ("transformations" or "all/basic" for example)
-  val foldersToTest = Seq("all")
+  val foldersToTest = Seq("gradual", "all/basic")
 
   // Main method
   private def testAFolder(loc: String) {

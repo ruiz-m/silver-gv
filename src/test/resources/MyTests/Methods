@@ -1,6 +1,0 @@
-field f: Ref
-
-method m1() {
-  var x: Int := x.f
-
-}
