@@ -1097,7 +1097,7 @@ object FastParser extends PosParser[Char, String] {
 
   lazy val predicateDecl: P[PPredicate] = P("predicate" ~/ idndef ~ "(" ~ formalArgList ~ ")" ~ ("{" ~ ("?" ~ "&&").? ~ exp ~ "}").?).map { case (a, b, c) => PPredicate(a, b, c) }
 
-  lazy val methodDecl: P[PMethod] = P(methodSignature ~/ (gradpre | pre).rep ~ post.rep ~ block.?).map {
+  lazy val methodDecl: P[PMethod] = P(methodSignature ~/ (gradpre | pre).rep ~ (gradpost | post).rep ~ block.?).map {
     case (name, args, rets, pres, posts, body) =>
       PMethod(name, args, rets.getOrElse(Nil), pres, posts, body)
   }
