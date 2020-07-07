@@ -16,6 +16,7 @@ class PrettyPrinterTest extends FunSuite with Matchers {
     val c = Seqn(Seq(b), Seq())(NoPosition, NoInfo)
 
     val printed = FastPrettyPrinter.pretty(c)
+    println(printed)
 
     assert(printed.contains(comment))
   }
