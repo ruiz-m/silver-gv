@@ -31,7 +31,7 @@ method t1_1(n: Int) returns ()
 
 // again ? can be 0 <= n, so should pass
 method t1_2(n: Int) returns ()
-    requires ?
+    requires ? && true
 {
     var i: Int := 0
 
@@ -44,7 +44,7 @@ method t1_2(n: Int) returns ()
 
 // ? can also be 2 <= n, so this should pass too
 method t1_3(n: Int) returns ()
-    requires ?
+    requires ? && true
 {
     var i: Int := 2
 
@@ -56,8 +56,8 @@ method t1_3(n: Int) returns ()
 }
 
 // this should fail because n cannot be < 2 and >= 2
-method t1_3(n: Int) returns ()
-    requires ?
+method t1_4(n: Int) returns ()
+    requires ? && true
 {
     var i: Int := 2
 
@@ -95,20 +95,6 @@ method t3(r: Ref) returns ()
     {
         assert i == 1
         //:: ExpectedOutput(assert.failed:assertion.false)
-        assert j == 2
-        j := j+1
-    }
-}
-
-// ? can optimistically be false, so should pass
-method t3_2(r: Ref) returns ()
-{
-    var i: Int := 1
-    var j: Int := 2
-
-    while (? && true)
-    {
-        assert i == 1
         assert j == 2
         j := j+1
     }

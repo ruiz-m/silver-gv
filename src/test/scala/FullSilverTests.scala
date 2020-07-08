@@ -10,7 +10,7 @@ import scala.io.Source
 class FullSilverTests extends FunSuite {
 
   // List of folders to test, all must be paths back to resources ("transformations" or "all/basic" for example)
-  val foldersToTest = Seq("gradual", "all/basic")
+  val foldersToTest = Seq("gradual")
 
   // Main method
   private def testAFolder(loc: String) {
@@ -52,7 +52,7 @@ class FullSilverTests extends FunSuite {
       println("ignoring " + fullLoc)
     } else {
       test("testing " + fullLoc) {
-        parse(fullLoc, frontend, fail)
+        toTranslate(fullLoc, frontend, fail)
       }
     }
   }
@@ -60,6 +60,7 @@ class FullSilverTests extends FunSuite {
   // recursively decends folders and tests all files in them
   // builds a path back to resources as it does so
   private def recursiveListFiles(f: File, path: String) {
+
     val these = f.listFiles
     assert(these != null, s"Folder $f not found")
 
@@ -73,7 +74,7 @@ class FullSilverTests extends FunSuite {
   }
 
 
-  private def parse(testFile: String, frontend: MockSilFrontend, shouldFail: Boolean): Unit = {
+  private def toTranslate(testFile: String, frontend: MockSilFrontend, shouldFail: Boolean): Unit = {
 
     val fileRes = getClass.getResource(testFile)
     assert(fileRes != null, s"File $testFile not found")
@@ -90,6 +91,7 @@ class FullSilverTests extends FunSuite {
 
     if (targetNode != null) assert(!shouldFail, s"\n$testFile should fail, but didn't")
     else                    assert(shouldFail)
+  //  println((targetNode.toString())
 }
 
   foldersToTest.foreach(folder => testAFolder(folder))

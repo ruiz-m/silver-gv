@@ -182,6 +182,8 @@ object FastParser extends PosParser[Char, String] {
 
   def keyword(check: String) = check ~~ !identContinues
 
+  def possibleParens[A](p: fastparse.noApi.Parser[A]) = parens(p) | p
+
   def parens[A](p: fastparse.noApi.Parser[A]) = "(" ~ p ~ ")"
 
   def angles[A](p: fastparse.noApi.Parser[A]) = "<" ~ p ~ ">"

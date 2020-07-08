@@ -13,7 +13,7 @@ import viper.silver.frontend.{SilFrontend, SilFrontendConfig, DefaultStates}
 import viper.silver.verifier.{AbstractError, Verifier}
 
 object TestHelpers {
-  class MockSilFrontend extends SilFrontend { 
+  class MockSilFrontend extends SilFrontend {
     def createVerifier(fullCmd: _root_.scala.Predef.String): Verifier = ???
 
     def configureVerifier(args: Seq[String]): SilFrontendConfig = ???
