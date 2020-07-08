@@ -49,6 +49,14 @@ sealed trait Exp extends Hashable with Typed with Positioned with Infoed with Tr
 
 }
 
+case class ImpreciseExp(e: Exp)(val pos: Position = NoPosition, val info: Info = NoInfo, val errT: ErrorTrafo = NoTrafos) extends Exp{
+  var exp = e
+  val typ = exp.typ
+  override lazy val check: Seq[ConsistencyError] =
+    (if(!(exp.typ isSubtype Bool)) Seq(ConsistencyError(s"Parameter to imprecise expression class must be of Bool type, but found ${exp.typ}", exp.pos)) else Seq())
+
+}
+
 // --- Simple integer and boolean expressions (binary and unary operations, literals)
 
 // Arithmetic expressions

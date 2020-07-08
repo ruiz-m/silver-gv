@@ -87,6 +87,7 @@ object Nodes {
           case Forall(v, triggers, exp) => v ++ triggers ++ Seq(exp)
           case ForPerm(v, resource, exp) => v :+ resource :+ exp
           case InhaleExhaleExp(in, ex) => Seq(in, ex)
+          case ImpreciseExp(e) => Nil
           case WildcardPerm() => Nil
           case FullPerm() => Nil
           case NoPerm() => Nil

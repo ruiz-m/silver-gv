@@ -336,6 +336,8 @@ case class Translator(program: PProgram) {
           case "setminus" => AnySetMinus(l, r)(pos)
           case _ => sys.error(s"unexpected operator $op")
         }
+      case pie @ PImpreciseExp(e) => 
+        ImpreciseExp(exp(e))(pos)
       case PUnExp(op, pe) =>
         val e = exp(pe)
         op match {

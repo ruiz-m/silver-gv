@@ -690,7 +690,7 @@ object FastParser extends PosParser[Char, String] {
   /** The file we are currently parsing (for creating positions later). */
   def file: Path = _file
 
-
+  //No gradual keywords yet
   // pruned label, goto, exhale, inhale, package, apply, function, forperm, Seq, Set, Multiset, let, domain, axiom, define, assume
   lazy val keywords = Set("result",
     // types
@@ -788,6 +788,10 @@ object FastParser extends PosParser[Char, String] {
   }
   }
   lazy val exp: P[PExp] = P(iteExpr)
+
+  lazy val gradExp: P[PExp] = P("?" ~ "&&" ~ "(".? ~ exp ~ ")".?).map {
+    case exp => PImpreciseExp(exp)
+  }
 
   lazy val suffix: fastparse.noApi.Parser[SuffixedExpressionGenerator[PExp]] =
     P(("." ~ idnuse).map { id => SuffixedExpressionGenerator[PExp]((e: PExp) => PFieldAccess(e, id)) })
@@ -1008,11 +1012,15 @@ object FastParser extends PosParser[Char, String] {
 
   lazy val els: P[PSeqn] = (keyword("else") ~/ block).?.map { block => block.getOrElse(PSeqn(Nil)) }
 
-  lazy val whle: P[PWhile] = P(keyword("while") ~/ "(" ~ exp ~ ")" ~ inv.rep ~ block).map {
+  lazy val whle: P[PWhile] = P(keyword("while") ~/ "(" ~ exp ~ ")" ~ (inv | gradInv).rep ~ block).map {
     case (cond, invs, body) => PWhile(cond, invs, body)
   }
 
-  lazy val inv: P[PExp] = P((keyword("invariant") ~/ (("?" ~ "&&").? ~ "(".? ~ exp ~ ")".?) ~ ";".?) | ParserExtension.invSpecification)
+  lazy val inv: P[PExp] = P((keyword("invariant") ~/ ("(".? ~ exp ~ ")".?) ~ ";".?) | ParserExtension.invSpecification)
+
+  lazy val gradInv: P[PExp] = P((keyword("invariant") ~/ ("(".? ~ ("?" ~ "&&") ~ exp ~ ")".?) ~ ";".?).map {
+    case exp => PImpreciseExp(exp)
+  }| ParserExtension.invSpecification)
 
   lazy val varDecl: P[PLocalVarDecl] = P(keyword("var") ~/ idndef ~ ":" ~ typ ~ (":=" ~ exp).?).map { case (a, b, c) => PLocalVarDecl(a, b, c) }
 
@@ -1048,7 +1056,7 @@ object FastParser extends PosParser[Char, String] {
   lazy val applying: P[PExp] = P(keyword("applying") ~/ "(" ~ magicWandExp ~ ")" ~ "in" ~ exp).map { case (a, b) => PApplying(a, b) }
 
   // pruned functionDecl, defineDecl, domainDecl
-  lazy val programDecl: P[PProgram] = P((ParserExtension.newDeclAtStart | preambleImport | fieldDecl |  predicateDecl | methodDecl | ParserExtension.newDeclAtEnd).rep).map {
+  lazy val programDecl: P[PProgram] = P((ParserExtension.newDeclAtStart | preambleImport | defineDecl | domainDecl | fieldDecl | functionDecl | predicateDecl | gradPredicateDecl | methodDecl | ParserExtension.newDeclAtEnd).rep).map {
     decls => {
       PProgram(
         decls.collect { case i: PImport => i }, // Imports
@@ -1103,17 +1111,23 @@ object FastParser extends PosParser[Char, String] {
   lazy val functionDecl: P[PFunction] = P("function" ~/ idndef ~ "(" ~ formalArgList ~ ")" ~ ":" ~ typ ~ pre.rep ~
     post.rep ~ ("{" ~ exp ~ "}").?).map { case (a, b, c, d, e, f) => PFunction(a, b, c, d, e, f) }
 
-  lazy val gradpre: P[PExp] = P(("requires ? &&" ~/ "(".? ~ exp ~ ")".? ~ ";".?) | ParserExtension.preSpecification)
-
   lazy val pre: P[PExp] = P(("requires" ~/ exp ~ ";".?) | ParserExtension.preSpecification)
 
-  lazy val gradpost: P[PExp] = P(("ensures ? &&" ~/ "(".? ~ exp ~ ")".? ~ ";".?) | ParserExtension.postSpecification)
+  lazy val gradpre: P[PExp] = P(("requires" ~ "(".? ~ "?" ~ "&&" ~/ exp ~ ")".? ~ ";".?).map {
+    case exp => PImpreciseExp(exp)
+  }| ParserExtension.preSpecification)
 
   lazy val post: P[PExp] = P(("ensures" ~/ exp ~ ";".?) | ParserExtension.postSpecification)
 
+  lazy val gradpost: P[PExp] = P(("ensures" ~ "(".? ~ "?" ~ "&&" ~/ exp ~ ")".? ~ ";".?).map {
+    case exp => PImpreciseExp(exp)
+  }| ParserExtension.postSpecification)
+
   lazy val decCl: P[Seq[PExp]] = P(exp.rep(sep = ","))
 
-  lazy val predicateDecl: P[PPredicate] = P("predicate" ~/ idndef ~ "(" ~ formalArgList ~ ")" ~ ("{" ~ ("?" ~ "&&").? ~ "(".? ~ exp ~ ")".? ~ "}").?).map { case (a, b, c) => PPredicate(a, b, c) }
+  lazy val predicateDecl: P[PPredicate] = P("predicate" ~/ idndef ~ "(" ~ formalArgList ~ ")" ~ ("{" ~ exp ~ "}").?).map { case (a, b, c) => PPredicate(a, b, c) }
+  
+  lazy val gradPredicateDecl: P[PPredicate] = P("predicate" ~/ idndef ~ "(" ~ formalArgList ~ ")" ~ ("{" ~ "(".? ~ gradExp ~ ")".? ~ "}").?).map { case (a, b, c) => PPredicate(a, b, c) }
 
   lazy val methodDecl: P[PMethod] = P(methodSignature ~/ (gradpre | pre).rep ~ (gradpost | post).rep ~ block.?).map {
     case (name, args, rets, pres, posts, body) =>

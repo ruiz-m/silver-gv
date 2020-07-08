@@ -382,6 +382,13 @@ trait PExp extends PNode {
   def forceSubstitution(ts: PTypeSubstitution)
 }
 
+case class PImpreciseExp(e: PExp) extends PExp{
+  //"Imprecise" expression
+  var exp = e
+  override val typeSubstitutions = Nil //List(PTypeSubstitution.id)
+  def forceSubstitution(ts: PTypeSubstitution) = {}
+}
+
 case class PMagicWandExp(override val left: PExp, override val right: PExp) extends PBinExp(left, MagicWandOp.op, right) with PResourceAccess
 
 class PTypeSubstitution(val m:Map[String,PType])  //extends Map[String,PType]()
@@ -1145,6 +1152,7 @@ object Nodes {
       case PForPerm(vars, res, expr) => vars :+ res :+ expr
       case PCondExp(cond, thn, els) => Seq(cond, thn, els)
       case PInhaleExhaleExp(in, ex) => Seq(in, ex)
+      case PImpreciseExp(e) => Nil
       case PCurPerm(loc) => Seq(loc)
       case PNoPerm() => Nil
       case PFullPerm() => Nil

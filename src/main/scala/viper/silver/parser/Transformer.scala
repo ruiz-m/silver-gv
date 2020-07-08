@@ -62,6 +62,7 @@ object Transformer {
         case PForPerm(vars, res, exp) => PForPerm(vars map go, go(res), go(exp))
         case PCondExp(cond, thn, els) => PCondExp(go(cond), go(thn), go(els))
         case PInhaleExhaleExp(in, ex) => PInhaleExhaleExp(go(in), go(ex))
+        case PImpreciseExp(e) => PImpreciseExp(go(e))
         case PCurPerm(loc) => PCurPerm(go(loc))
         case _: PNoPerm => parent
         case _: PFullPerm => parent
