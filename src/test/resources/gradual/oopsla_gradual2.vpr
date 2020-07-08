@@ -34,24 +34,19 @@ method insertLast(this: Ref, value: Int)
 method insertLastHelper(this: Ref, value: Int)
   requires acyclic(this)
       && unfolding acyclic(this) in (this.head != null)
-  ensures acyclic(this)
+  ensures ? && true
 {
   unfold acyclic(this)
   var y: Ref := this.head
-  fold listSeg(this.head, y)
   unfold listSeg(y, null)
 
   while (y.next != null)
-    invariant y != null && acc(this.head)
-      && listSeg(this.head, y) && acc(y.val)
+    invariant y != null && acc(y.val)
       && acc(y.next) && listSeg(y.next, null)
   {
     var x: Ref := y
     y := y.next
-    fold listSeg(x.next, y)
-    fold listSeg(x, y)
     unfold listSeg(y, null)
-    appendLemma(this.head, x, y)
   }
 
   var newNode : Ref
@@ -62,21 +57,4 @@ method insertLastHelper(this: Ref, value: Int)
   fold listSeg(y.next.next, null)
   fold listSeg(y.next, null)
   fold listSeg(y, null)
-  appendLemma(this.head, y, null)
-  fold acyclic(this)
-}
-
-
-method appendLemma(a: Ref, b: Ref, c: Ref)
-  requires listSeg(a, b) && listSeg(b, c)
-    && ((c == null) ? true : acc(c.next))
-  ensures listSeg(a, c)
-    && ((c == null) ? true : acc(c.next))
-{
-  if (a == b) { }
-  else {
-    unfold listSeg(a, b)
-    appendLemma(a.next, b, c)
-    fold listSeg(a, c)
-  }
 }
