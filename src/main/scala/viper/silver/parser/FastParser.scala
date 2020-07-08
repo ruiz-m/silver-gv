@@ -1020,7 +1020,7 @@ object FastParser extends PosParser[Char, String] {
 
   lazy val inv: P[PExp] = P((keyword("invariant") ~/ ("(".? ~ exp ~ ")".?) ~ ";".?) | ParserExtension.invSpecification)
 
-  lazy val gradInv: P[PExp] = P((keyword("invariant") ~/ ("(".? ~ ("?" ~ "&&") ~ exp ~ ")".?) ~ ";".?).map {
+  lazy val gradInv: P[PExp] = P((keyword("invariant") ~ ("(".? ~ ("?" ~ "&&") ~ exp ~ ")".?) ~ ";".?).map {
     case exp => PImpreciseExp(exp)
   }| ParserExtension.invSpecification)
 
