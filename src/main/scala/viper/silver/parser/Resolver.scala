@@ -468,7 +468,9 @@ case class TypeChecker(names: NameAnalyser) {
 
   def checkTopTyped(exp: PExp, oexpected: Option[PType]): Unit =
   {
+//    println("init " + exp + " " + exp.typ)
     check(exp, PTypeSubstitution.id)
+//    println("post-check " + exp + " " + exp.typ)
     if (exp.typ.isValidOrUndeclared && exp.typeSubstitutions.nonEmpty) {
       val etss = oexpected match {
         case Some(expected) if expected.isValidOrUndeclared => exp.typeSubstitutions.flatMap(_.add(exp.typ, expected))
@@ -705,6 +707,17 @@ case class TypeChecker(names: NameAnalyser) {
         curMember = oldCurMember
 
       case pie @ PImpreciseExp(e) =>
+        checkInternal(pie.exp)
+        var nestedTypeError = !pie.exp.typ.isValidOrUndeclared
+        if (nestedTypeError)
+        {
+          typeError(pie)
+        }
+        else
+        {
+          setType(pie.exp.typ)
+        }
+
 
       case pq: PForPerm =>
         val oldCurMember = curMember

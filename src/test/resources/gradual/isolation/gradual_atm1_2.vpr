@@ -1,0 +1,3 @@
+method withdraw(balance: Int, amount: Int) returns (remaining: Int)
+    requires ?&& 5 == 5
+{ }

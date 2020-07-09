@@ -385,7 +385,8 @@ trait PExp extends PNode {
 case class PImpreciseExp(e: PExp) extends PExp{
   //"Imprecise" expression
   var exp = e
-  override val typeSubstitutions = Nil //List(PTypeSubstitution.id)
+  private val _typeSubstitutions = new scala.collection.mutable.MutableList[PTypeSubstitution]()
+  final override def typeSubstitutions = _typeSubstitutions
   def forceSubstitution(ts: PTypeSubstitution) = {}
 }
 
@@ -1152,7 +1153,7 @@ object Nodes {
       case PForPerm(vars, res, expr) => vars :+ res :+ expr
       case PCondExp(cond, thn, els) => Seq(cond, thn, els)
       case PInhaleExhaleExp(in, ex) => Seq(in, ex)
-      case PImpreciseExp(e) => Nil
+      case PImpreciseExp(e) => Seq(e)
       case PCurPerm(loc) => Seq(loc)
       case PNoPerm() => Nil
       case PFullPerm() => Nil
