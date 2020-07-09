@@ -239,7 +239,7 @@ case class Translator(program: PProgram) {
     pexp match {
 
       case piu @ PIdnUse(name) =>
-    //    println(piu.decl)
+//        println(piu.decl)
         piu.decl match {
           case _: PLocalVarDecl | _: PFormalArgDecl => LocalVar(name, ttyp(pexp.typ))(pos)
           case pf: PField =>
@@ -316,7 +316,7 @@ case class Translator(program: PProgram) {
             l.typ match {
               case Int => GeCmp(l, r)(pos)
               case Perm => PermGeCmp(l, r)(pos)
-              case _ => {sys.error("unexpected type") }
+              case _ => sys.error("unexpected type")
             }
           case "==" => EqCmp(l, r)(pos)
           case "!=" => NeCmp(l, r)(pos)

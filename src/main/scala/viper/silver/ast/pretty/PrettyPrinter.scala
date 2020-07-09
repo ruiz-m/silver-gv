@@ -714,6 +714,7 @@ object FastPrettyPrinter extends FastPrettyPrinterBase with BracketPrettyPrinter
   }
 
   override def toParenDoc(e: PrettyExpression): Cont = e match {
+    case ImpreciseExp(exp) => text("? &&") <+> show(exp)
     case IntLit(i) => value(i)
     case BoolLit(b) => value(b)
     case NullLit() => value(null)

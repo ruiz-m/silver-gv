@@ -5,12 +5,18 @@ import viper.silver.ast._
 import java.io.File
 import scala.io.Source
 
-// Class that tests every step up to and including Translation
+// Class that tests every step of Silver
 
 class FullSilverTests extends FunSuite {
 
   // List of folders to test, all must be paths back to resources ("transformations" or "all/basic" for example)
-  val foldersToTest = Seq("gradual")
+  val foldersToTest = Seq("gradual/isolation")
+
+  // options Parsing, Semantic Analysis, Translation, Consistency Check
+  val runTill = "Consistency Check"
+
+  // toggles printing at end of run
+  val print = false
 
   // Main method
   private def testAFolder(loc: String) {
@@ -83,15 +89,21 @@ class FullSilverTests extends FunSuite {
 
 
     //translate is in TestHelpers.scala and does every stage up to and including Translation on a file
-    frontend.translate(file) match {
-      case (Some(p), _) => targetNode = p
-      case (None, errors) => if (!shouldFail)
-                              sys.error("Error occurred during translating: " + errors)
+    frontend.runTill(file, runTill) match {
+      case (Some(p), _, state) =>
+    //    println(FastPrettyPrinter.pretty(p.get))
+    //    targetNode = p
+        if (p != null) assert(!shouldFail, s"\n$testFile should fail, but didn't")
+        else           assert(shouldFail)
+
+        if (print) println("The state is: " + state + "\n" + p)
+
+      case (None, errors, state) => if (!shouldFail)
+                                sys.error("Error occurred during " + state + " " + errors)
     }
 
-    if (targetNode != null) assert(!shouldFail, s"\n$testFile should fail, but didn't")
-    else                    assert(shouldFail)
-  //  println((targetNode.toString())
+
+//    println(FastPrettyPrinter.pretty(targetNode.get))
 }
 
   foldersToTest.foreach(folder => testAFolder(folder))

@@ -16,7 +16,6 @@ import viper.silver.ast._
 import viper.silver.plugin.PluginAwareReporter
 import viper.silver.reporter.StdIOReporter
 import viper.silver.verifier._
-import viper.silver.ast.pretty.FastPrettyPrinter
 
 
 /** Represents one phase of a frontend */

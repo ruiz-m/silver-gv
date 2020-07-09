@@ -27,6 +27,24 @@ object TestHelpers {
 
       (_program, _errors)
     }
+
+    def runTill(silverFile: Path, endPhase: String) = {
+      _verifier = None
+      _state = DefaultStates.Initialized
+
+      reset(silverFile)
+      runTo(endPhase)
+  //    println("The state is: " + state)
+  //    println(_parsingResult.get)
+      endPhase match {
+        case "Parsing" => (_parsingResult, _errors, state)
+        case "Semantic Analysis" => (_semanticAnalysisResult, _errors, state)
+        case "Translation" => (_program, _errors, state)
+        case "Consistency Check" => (_program, _errors, state)
+        case _ => sys.error(endPhase + "is not a phase")
+      }
+
+    }
   }
 
   // From: http://biercoff.com/easily-measuring-code-execution-time-in-scala/
