@@ -16,7 +16,7 @@ class FullSilverTests extends FunSuite {
   val runTill = "Consistency Check"
 
   // toggles printing at end of run
-  val print = false
+  val print = true
 
   // Main method
   private def testAFolder(loc: String) {

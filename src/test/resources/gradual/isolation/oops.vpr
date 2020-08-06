@@ -1,0 +1,23 @@
+field val : Int
+field next : Ref
+field head : Ref
+
+predicate acyclic(this: Ref) {
+  acc(this.head) && listSeg(this.head, null)
+}
+
+predicate listSeg(from: Ref, to: Ref) {
+  (from == to) ? true : (acc(from.val) && acc(from.next)
+      && listSeg(from.next, to))
+}
+
+method toasty(x: Ref, y: Ref)
+  requires listSeg(x, y) && x != y && acc(x.next)
+{
+  burner(x)
+  unfold listSeg(x, y)
+}
+
+method burner(burnee: Ref)
+  requires acc(burnee.next)
+{}

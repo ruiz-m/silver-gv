@@ -52,9 +52,10 @@ sealed trait Exp extends Hashable with Typed with Positioned with Infoed with Tr
 case class ImpreciseExp(e: Exp)(val pos: Position = NoPosition, val info: Info = NoInfo, val errT: ErrorTrafo = NoTrafos) extends Exp{
   var exp = e
   val typ = exp.typ
-  override lazy val check: Seq[ConsistencyError] =
-    (if(!(exp.typ isSubtype Bool)) Seq(ConsistencyError(s"Parameter to imprecise expression class must be of Bool type, but found ${exp.typ}", exp.pos)) else Seq())
-
+  override lazy val check: Seq[ConsistencyError] =(
+    if(!(exp.typ isSubtype Bool))
+      Seq(ConsistencyError(s"Parameter to imprecise expression class must be of Bool type, but found ${exp.typ}", exp.pos)) 
+    else Seq())
 }
 
 // --- Simple integer and boolean expressions (binary and unary operations, literals)
@@ -180,7 +181,7 @@ case class MagicWand(left: Exp, right: Exp)(val pos: Position = NoPosition, val 
      *
      * Wands transformed in this way can be compared for equality as follows: an initial
      * syntactic comparison can be used to check if the wands match structurally, a subsequent
-     * semantic comparison of their arguments (the values that go into the wands' holes) then
+     * semantic comparison of their arguments (the values that go into the wands holes) then
      * ensures that the wands are actually (i.e. semantically) equivalent.
      */
     val subexpressionsToEvaluate = this.subexpressionsToEvaluate(p)

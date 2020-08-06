@@ -11,6 +11,10 @@ predicate listSeg(from: Ref, to: Ref) {
       && listSeg(from.next, to))
 }
 
+method burner(burnee: Ref)
+  requires acc(burnee.next) && acc(burnee.val)
+  {}
+
 method insertLast(this: Ref, value: Int)
   requires acyclic(this)
   ensures acyclic(this)
@@ -50,6 +54,8 @@ method insertLastHelper(this: Ref, value: Int)
     y := y.next
     fold listSeg(x.next, y)
     fold listSeg(x, y)
+//    assert acc(y.val)
+//    burner(y)
     unfold listSeg(y, null)
     appendLemma(this.head, x, y)
   }
@@ -69,9 +75,7 @@ method insertLastHelper(this: Ref, value: Int)
 
 method appendLemma(a: Ref, b: Ref, c: Ref)
   requires listSeg(a, b) && listSeg(b, c)
-    && ((c == null) ? true : acc(c.next))
   ensures listSeg(a, c)
-    && ((c == null) ? true : acc(c.next))
 {
   if (a == b) { }
   else {
