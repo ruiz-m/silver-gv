@@ -706,19 +706,6 @@ case class TypeChecker(names: NameAnalyser) {
         pl._typeSubstitutions = (for (ts1 <- pl.body.typeSubstitutions;ts2 <- e.typeSubstitutions) yield ts1*ts2).flatten.toList.distinct
         curMember = oldCurMember
 
-      case pie @ PImpreciseExp(e) =>
-        checkInternal(pie.exp)
-        var nestedTypeError = !pie.exp.typ.isValidOrUndeclared
-        if (nestedTypeError)
-        {
-          typeError(pie)
-        }
-        else
-        {
-          setType(pie.exp.typ)
-        }
-
-
       case pq: PForPerm =>
         val oldCurMember = curMember
         curMember = pq

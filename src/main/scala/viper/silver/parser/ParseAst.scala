@@ -382,12 +382,13 @@ trait PExp extends PNode {
   def forceSubstitution(ts: PTypeSubstitution)
 }
 
-case class PImpreciseExp(e: PExp) extends PExp{
+case class PImpreciseExp(e: PExp) extends POpApp{
   //"Imprecise" expression
-  var exp = e
-  private val _typeSubstitutions = new scala.collection.mutable.MutableList[PTypeSubstitution]()
-  final override def typeSubstitutions = _typeSubstitutions
-  def forceSubstitution(ts: PTypeSubstitution) = {}
+  override val opName = "?"
+  override val args = Seq(e)
+  val signatures : List[PTypeSubstitution] = List(
+      Map(POpApp.pResS -> POpApp.pArg(0))
+  )
 }
 
 case class PMagicWandExp(override val left: PExp, override val right: PExp) extends PBinExp(left, MagicWandOp.op, right) with PResourceAccess
