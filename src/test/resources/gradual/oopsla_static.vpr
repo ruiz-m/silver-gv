@@ -52,11 +52,9 @@ method insertLastHelper(this: Ref, value: Int)
   {
     var x: Ref := y
     y := y.next
+    unfold listSeg(y, null)
     fold listSeg(x.next, y)
     fold listSeg(x, y)
-//    assert acc(y.val)
-//    burner(y)
-    unfold listSeg(y, null)
     appendLemma(this.head, x, y)
   }
 

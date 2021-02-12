@@ -1,6 +1,6 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
-
+//:: IgnoreFile(/silicon/issue/208/)
 
 field f: Ref
 
@@ -14,7 +14,7 @@ method t0() {
     assert c.f != c // This assertion was expected true in an old version of the test case, but should fail
 }
 
-
+/*
 // test aliasing of heap values with other objects
 method t1() {
     var a: Ref
@@ -32,7 +32,7 @@ method t1() {
     /:: ExpectedOutput(assert.failed:assertion.false)
     assert a.f != c
 }
-
+*/
 
 method set_f(monitor: Ref, value: Ref)
   requires acc(monitor.f, write)

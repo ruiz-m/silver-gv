@@ -20,6 +20,6 @@ method main(account : Ref)
   fold balanceGE(account, 30)
   withdraw(account, 30)
   unfold balanceGE(account, 0)
-  fold balanceGE(account, 40)
-  withdraw(account, 40)
+  //fold balanceGE(account, 40)
+  //withdraw(account, 40)
 }

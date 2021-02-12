@@ -729,7 +729,7 @@ object FastParser extends PosParser[Char, String] {
     "unique") | ParserExtension.extendedKeywords
 
 
-/* pruned inhaleExhale, applying, fapp, typedfapp, forperm, quant, let, seqLength, setTypedEmpty,
+/* pruned inhaleExhale, applying, forperm, quant, let, seqLength, setTypedEmpty,
  *  explicitSetNonEmpty, multiSetTypedEmpty, explicitMultisetNonEmpty, seqTypedEmpty, explicitSeqNonEmpty,
  *  seqRange, perm
  */
@@ -861,7 +861,6 @@ object FastParser extends PosParser[Char, String] {
   // pruned realMagicWandExp
   lazy val resAcc: P[PResourceAccess] = P(locAcc)
 
-  //pruned predAcc
   lazy val locAcc: P[PLocationAccess] = P(fieldAcc | predAcc)
 
   lazy val fieldAcc: P[PFieldAccess] =
@@ -924,14 +923,7 @@ object FastParser extends PosParser[Char, String] {
 
   lazy val unfolding: P[PExp] = P(keyword("unfolding") ~/ predicateAccessPred ~ "in" ~ exp).map { case (a, b) => PUnfolding(a, b) }
 
-/* pruned predAcc.map (
- *     loc => {
- *       val perm = PFullPerm()
- *      FastPositions.setStart(perm, loc.start)
- *    FastPositions.setFinish(perm, loc.finish)
- *      PAccPred(loc, perm)
- *  })
- */
+
    lazy val predicateAccessPred: P[PAccPred] = P(accessPred | predAcc.map (
     loc => {
       val perm = PFullPerm()

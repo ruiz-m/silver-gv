@@ -11,5 +11,5 @@ method main()
 {
     var bal: Int := 100
     bal := withdraw(bal, 30)
-//    bal := withdraw(bal, 40)
+  //  bal := withdraw(bal, 40)
 }
