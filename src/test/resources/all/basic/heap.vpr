@@ -1,6 +1,6 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
-//:: IgnoreFile(/silicon/issue/208/)
+
 
 field f: Ref
 
@@ -16,20 +16,19 @@ method t0() {
 
 /*
 // test aliasing of heap values with other objects
-method t1() {
-    var a: Ref
+method t1(a: Ref)
+  requires acc(a.f, write)
+{
     var c: Ref
-
-    inhale acc(a.f, write)
-
     c := new(f)
 
     //assert c.f != c // This assertion was in an old version of the test case, but should fail
 
-    assume a != null
+    //:: ExpectedOutput(assert.failed:assertion.true)
+    assert a != null
     set_f(a, c)
 
-    /:: ExpectedOutput(assert.failed:assertion.false)
+    //:: ExpectedOutput(assert.failed:assertion.false)
     assert a.f != c
 }
 */
@@ -44,9 +43,11 @@ method set_f(monitor: Ref, value: Ref)
 
 method t2(r: Ref) {
   if (r != null) {
-    assert perm(r.f) == none
+    //:: ExpectedOutput(assert.failed:assertion.false)
+    assert acc(r.f, write)
   } else {
-    assert perm(r.f) == none
+     //:: ExpectedOutput(assert.failed:assertion.false)
+    assert acc(r.f, write)
   }
 }
 
