@@ -17,6 +17,7 @@ import viper.silver.utility.TimingUtils
 /** A test suite for verification toolchains that use Viper. */
 abstract class SilSuite extends AnnotationBasedTestSuite with BeforeAndAfterAllConfigMap {
 
+
   /**
    * Should return the verifier instances used in this test suite
    */
@@ -55,6 +56,7 @@ abstract class SilSuite extends AnnotationBasedTestSuite with BeforeAndAfterAllC
     *
     * @param configMap The config map provided by ScalaTest.
     */
+
   override def beforeAll(configMap: ConfigMap) {
     configureVerifiersFromConfigMap(configMap)
     verifiers foreach (_.start())
@@ -79,7 +81,6 @@ abstract class SilSuite extends AnnotationBasedTestSuite with BeforeAndAfterAllC
     */
   protected def splitConfigMap(configMap: Map[String, Any]): Map[String, Map[String, Any]] = {
     val prefixSpecificConfigMap = mutable.HashMap[String, mutable.HashMap[String, Any]]()
-
     configMap foreach {
       case (potentialKey, value) =>
         val (prefix, key) =
@@ -108,11 +109,24 @@ abstract class SilSuite extends AnnotationBasedTestSuite with BeforeAndAfterAllC
       info(s"Verifier used: ${verifier.name} ${verifier.version}.")
       info(s"Time required: $tPhases.")
       val actualErrors = fe.result match {
-        case Success => Nil
-        case Failure(es) => es collect {
-          case e: AbstractVerificationError =>
-            e.transformedError()
-          case rest: AbstractError => rest
+        case Success =>
+          Nil
+        case Failure(es) =>
+          es collect {
+          //  case parse: TestAdditionalOutputError =>
+
+            case e: AbstractVerificationError =>
+              e.transformedError()
+
+            // this case cancels any parsing errors, leaving only verification one
+            // can remove w/o causing problems
+            case p: ParseError =>
+              cancel
+            case rest: AbstractError =>
+              rest
+
+            // cancel gets rid of any parser failures
+            // cancel
         }
       }
       actualErrors.map(SilOutput)

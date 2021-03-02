@@ -11,5 +11,6 @@ method main()
 {
     var bal: Int := 100
     bal := withdraw(bal, 30)
-  //  bal := withdraw(bal, 40)
+    //:: ExpectedOutput(call.precondition:assertion.false)
+    bal := withdraw(bal, 40)
 }

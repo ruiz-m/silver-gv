@@ -14,6 +14,7 @@ method test01(x: Ref) returns (b: Bool)
   }
 }
 
+
 method test02(x: Ref) returns (b: Bool) {
   while (b)
     //:: ExpectedOutput(invariant.not.established:insufficient.permission)
