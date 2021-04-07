@@ -1,3 +1,8 @@
+[0m2021.03.21 14:52:58 INFO  Started: Metals version 0.10.0 in workspace 'C:\Users\jacob\Desktop\REUSE\silver-gv' for client vscode 1.53.2.[0m
+[0m2021.03.21 14:52:59 INFO  time: initialize in 1.23s[0m
+[0m2021.03.21 14:52:59 WARN  Build server is not auto-connectable.[0m
+[0m2021.03.21 14:52:59 WARN  no build target for: C:\Users\jacob\Desktop\REUSE\silver-gv\src\main\scala\viper\silver\verifier\VerificationError.scala[0m
+[0m2021.03.21 14:53:04 INFO  no build target: using presentation compiler with only scala-library: 2.12.13[0m
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -572,3 +577,14 @@ object reasons {
       SeqIndexExceedsLength(seq, offendingNode.asInstanceOf[Exp])
   }
 }
+
+[0m2021.03.21 14:53:07 INFO  time: code lens generation in 7.75s[0m
+[0m2021.03.21 14:53:07 INFO  time: code lens generation in 4.06s[0m
+[0m2021.03.21 14:53:07 INFO  time: code lens generation in 6.02s[0m
+[0m2021.03.21 14:58:25 INFO  shutting down Metals[0m
+[0m2021.04.06 21:15:47 INFO  Started: Metals version 0.10.0 in workspace 'C:\Users\jacob\Desktop\REUSE\silver-gv' for client vscode 1.54.3.[0m
+[0m2021.04.06 21:15:48 INFO  time: initialize in 1.36s[0m
+[0m2021.04.06 21:15:48 WARN  Build server is not auto-connectable.[0m
+[0m2021.04.06 21:15:48 WARN  no build target for: C:\Users\jacob\Desktop\REUSE\silver-gv\src\main\scala\viper\silver\verifier\VerificationError.scala[0m
+[0m2021.04.06 21:15:49 INFO  skipping build import with status 'Requested'[0m
+[0m2021.04.06 21:15:48 INFO  shutting down Metals[0m

@@ -1,7 +1,7 @@
 // Should parse but fail verification
 
 method withdraw(balance: Int, amount: Int) returns (remaining: Int)
-    requires balance >= amount
+    requires balance >= amount && amount > 0
     ensures remaining >= 0
 {
     remaining := balance - amount

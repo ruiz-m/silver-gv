@@ -31,7 +31,7 @@ sealed trait Exp extends Hashable with Typed with Positioned with Infoed with Tr
    */
   lazy val whenExhaling = Expressions.whenExhaling(this)
 
-  /** Returns the subexpressions of this expression */
+  /** Returns the // IDEA: subexpressions of this expression */
   lazy val subExps = Expressions.subExps(this)
 
   override def getMetadata:Seq[Any] = {
@@ -52,9 +52,10 @@ sealed trait Exp extends Hashable with Typed with Positioned with Infoed with Tr
 case class ImpreciseExp(e: Exp)(val pos: Position = NoPosition, val info: Info = NoInfo, val errT: ErrorTrafo = NoTrafos) extends Exp{
   var exp = e
   val typ = exp.typ
+
   override lazy val check: Seq[ConsistencyError] =(
     if(!(exp.typ isSubtype Bool))
-      Seq(ConsistencyError(s"Parameter to imprecise expression class must be of Bool type, but found ${exp.typ}", exp.pos)) 
+      Seq(ConsistencyError(s"Parameter to imprecise expression class must be of Bool type, but found ${exp.typ}", exp.pos))
     else Seq())
 }
 

@@ -716,7 +716,7 @@ object FastParser extends PosParser[Char, String] {
     // sets and multisets
     // "Set", "Multiset","union", "intersection", "setminus", "subset",
     // prover hint expressions
-    "unfolding", "in", "applying",
+    //"unfolding", "in", "applying",
     // old expression
     "old", "lhs",
     // other expressions
@@ -735,7 +735,7 @@ object FastParser extends PosParser[Char, String] {
  */
   lazy val atom: P[PExp] = P(ParserExtension.newExpAtStart | integer | booltrue | boolfalse | nul
     | old | result | unExp | fapp | typedFapp
-    | "(" ~ exp ~ ")" | accessPred | unfolding | applying
+    | "(" ~ exp ~ ")" | accessPred
     | idnuse | ParserExtension.newExpAtEnd)
 
 
