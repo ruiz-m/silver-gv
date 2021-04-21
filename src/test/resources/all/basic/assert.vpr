@@ -9,5 +9,5 @@ method t1(b: Bool, d: Int, r: Ref) returns ()
     ensures acc(r.test)
 {
     r.test := b
-    assert b != (r.test)
+    assert b == (r.test)
 }

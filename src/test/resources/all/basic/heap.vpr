@@ -24,11 +24,11 @@ method t1(a: Ref)
 
     //assert c.f != c // This assertion was in an old version of the test case, but should fail
 
-    //:: ExpectedOutput(assert.failed:assertion.true)
+    /:: ExpectedOutput(assert.failed:assertion.true)
     assert a != null
     set_f(a, c)
 
-    //:: ExpectedOutput(assert.failed:assertion.false)
+    /:: ExpectedOutput(assert.failed:assertion.false)
     assert a.f != c
 }
 */
@@ -42,13 +42,8 @@ method set_f(monitor: Ref, value: Ref)
 }
 
 method t2(r: Ref) {
-  if (r != null) {
-    //:: ExpectedOutput(assert.failed:assertion.false)
-    assert acc(r.f, write)
-  } else {
-     //:: ExpectedOutput(assert.failed:assertion.false)
-    assert acc(r.f, write)
-  }
+   //:: ExpectedOutput(assert.failed:insufficient.permission)
+  assert acc(r.f, write)
 }
 
 method t3(r:Ref) returns (res:Ref)

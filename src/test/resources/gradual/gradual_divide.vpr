@@ -1,0 +1,8 @@
+field val : Int
+
+method divide(a : Ref, b : Ref)
+  requires ? && b.val != 0
+  ensures acc(a.val) && acc(b.val)
+{
+  a.val := a.val / b.val
+}
