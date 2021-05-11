@@ -29,7 +29,7 @@ object Expressions {
     case Let(_, _, body) => isPure(body)
     case e: ExtensionExp => e.extensionIsPure
 
-    case ImpreciseExp(e0) => isPure(e0)
+    case ImpreciseExp(e0) => false
 
     case   _: Literal
          | _: PermExp

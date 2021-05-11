@@ -2,7 +2,7 @@ field val : Int
 
 method divide(a : Ref, b : Ref)
   requires acc(a.val) && acc(b.val) && b.val != 0
-  ensures acc(a.val) && acc(b.val)
+  ensures acc(a.val)
 
 {
   a.val := a.val / b.val
@@ -10,7 +10,7 @@ method divide(a : Ref, b : Ref)
 
 method main(x : Ref, y : Ref)
   requires acc(x.val) && acc(y.val)
-  ensures acc(x.val) && acc(y.val)
+  ensures acc(x.val)
 {
   y.val := 2
   x.val := 4
