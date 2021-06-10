@@ -121,6 +121,7 @@ abstract class SilSuite extends AnnotationBasedTestSuite with BeforeAndAfterAllC
             // this case cancels any parsing errors, leaving only verification one
             // can remove w/o causing problems
             case p: ParseError =>
+              info(p.readableMessage)
               cancel
             case rest: AbstractError =>
               rest
