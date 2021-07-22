@@ -5,6 +5,7 @@ method Ref__types(diz: Ref, current_thread_id: Int)
   requires diz != null
   requires current_thread_id >= 0
 {
+  //:: ExpectedOutput(parser.error)
   var L: Seq[Int]
   var S: Set[Int]
   var B: Multiset[Int]

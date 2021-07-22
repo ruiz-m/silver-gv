@@ -3,6 +3,7 @@
 
 field Counter__x: Int
 
+//:: ExpectedOutput(parser.error)
 method Loop__incr(diz: Ref, current_thread_id: Int, c: Ref, y: Int)
   requires diz != null
   requires current_thread_id >= 0

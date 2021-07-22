@@ -1,6 +1,7 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
+//:: ExpectedOutput(parser.error)
 field zero__x: Seq[Ref]
 
 field Ref__Integer_value: Int
@@ -27,7 +28,7 @@ method zero__main_main(diz: Ref, current_thread_id: Int, tcount: Int, gsize: Int
   ensures |diz.zero__x| == tcount
   ensures diz.zero__x == old(diz.zero__x)
   ensures acc(diz.zero__x[tid].Ref__Integer_value, write)
-    //:: ExpectedOutput(postcondition.violated:assertion.false)
+    // ExpectedOutput(postcondition.violated:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
     // confirmed by Stefan Blom
   ensures diz.zero__x[tid].Ref__Integer_value == 0
 {

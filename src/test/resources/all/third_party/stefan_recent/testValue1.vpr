@@ -6,13 +6,14 @@ field Test__next: Ref
 method Test__main1(diz: Ref, current_thread_id: Int, t1: Ref, t2: Ref)
   requires diz != null
   requires current_thread_id >= 0
+  //:: ExpectedOutput(parser.error)
   requires acc(t1.Test__next, wildcard)
   requires acc(t2.Test__next, wildcard)
   requires t1.Test__next != null
   requires t2.Test__next != null
 {
   if (t1 == t2) {
-    //:: ExpectedOutput(assert.failed:assertion.false)
+    // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
     // confirmed by Stefan Blom
     assert false
   }

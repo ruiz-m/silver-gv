@@ -15,6 +15,7 @@ method Test__seq_of_object(diz: Ref, current_thread_id: Int)
   requires diz != null
   requires current_thread_id >= 0
 {
+  //:: ExpectedOutput(parser.error)
   var L: Seq[Ref]
   L := Seq[Ref]()
   assert |L| == 0
