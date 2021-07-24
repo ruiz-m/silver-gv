@@ -29,14 +29,15 @@ method test04(c1: Ref, c2: Ref, c3: Ref)
   requires acc(c1.val) && acc(c2.val)
   requires c3 == c1 || c3 == c2
 {
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
+  //:: ExpectedOutput(parser.error)
   assert forperm r: Ref [r.val] :: r == c3 ==> false
 }
 
 method test07a(c1: Ref, c2: Ref)
   requires acc(c1.val)
 {
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert forperm r: Ref [r.val] :: r == c2 ==> false
 }
 

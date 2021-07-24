@@ -15,6 +15,7 @@ predicate P3(this: Ref) {
 
 method noPredicates()
 {
+  //:: ExpectedOutput(parser.error)
   assert forperm r: Ref [P1(r)] :: false
   assert forperm r: Ref [P2(r)] :: false
 }

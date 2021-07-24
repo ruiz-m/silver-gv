@@ -9,6 +9,7 @@ method noFields()
 {
   var r1: Ref
   var r2: Ref
+  //:: ExpectedOutput(parser.error)
   assert forperm r: Ref [r.f1] :: r.f1 > 0
   assert forperm r: Ref [r.f2] :: r.f1 > 0
   assert forperm r: Ref [r.f1] :: r.f2 > 0

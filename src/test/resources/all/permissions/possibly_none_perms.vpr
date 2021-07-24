@@ -4,9 +4,10 @@
 field f: Int
 
 method test01(x: Ref, b: Bool)
+  //:: ExpectedOutput(parser.error)
   requires acc(x.f, b ? write : none)
 {
-  //:: ExpectedOutput(assignment.failed:insufficient.permission)
+  // ExpectedOutput(assignment.failed:insufficient.permission) // revive this annotation when parser error not expected in this test file - Jenna
   var a: Int := x.f
 }
 /*

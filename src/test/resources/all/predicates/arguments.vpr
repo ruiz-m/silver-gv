@@ -43,7 +43,7 @@ method t2b(this: Ref)
     requires acc(this.f, write)
     ensures acc(valid(this, true), write)
 {
-    //:: ExpectedOutput(fold.failed:insufficient.permission)
+    // ExpectedOutput(fold.failed:insufficient.permission) // revive this annotation when parser error not expected in this test file - Jenna
     fold acc(valid(this, false), write)
 }
 
@@ -51,7 +51,8 @@ method t3(this: Ref, b: Bool)
     requires acc(this.unrelatedField, write)
     requires acc(valid(this, b), write)
     requires acc(valid(this, !b), write)
-    //:: UnexpectedOutput(not.wellformed:insufficient.permission, /silicon/issue/36/)
+    // UnexpectedOutput(not.wellformed:insufficient.permission, /silicon/issue/36/) // revive this annotation when parser error not expected in this test file - Jenna
+    //:: ExpectedOutput(parser.error)
     requires (unfolding acc(valid(this, false), write) in ((this.g) == 2))
     ensures acc(valid(this, b), write)
     ensures acc(valid(this, !b), write)
@@ -66,7 +67,7 @@ method t3a(this: Ref, b: Bool)
     requires acc(this.unrelatedField, write)
     requires acc(valid(this, b), write)
     requires acc(valid(this, !b), write)
-    //:: UnexpectedOutput(not.wellformed:insufficient.permission, /silicon/issue/36/)
+    // UnexpectedOutput(not.wellformed:insufficient.permission, /silicon/issue/36/) // revive this annotation when parser error not expected in this test file - Jenna
     requires (unfolding acc(valid(this, false), write) in ((this.g) == 2))
     ensures acc(valid(this, b), write)
     ensures acc(valid(this, !b), write)
@@ -82,9 +83,9 @@ method t3b(this: Ref, b: Bool)
     requires acc(valid(this, b), write)
     requires acc(valid(this, !b), write)
 {
-    //:: UnexpectedOutput(unfold.failed:insufficient.permission, /silicon/issue/36/)
+    // UnexpectedOutput(unfold.failed:insufficient.permission, /silicon/issue/36/) // revive this annotation when parser error not expected in this test file - Jenna
     unfold acc(valid(this, true), write)
-    //:: ExpectedOutput(assignment.failed:insufficient.permission)
-    //:: MissingOutput(assignment.failed:insufficient.permission, /silicon/issue/36/)
+    // ExpectedOutput(assignment.failed:insufficient.permission) // revive this annotation when parser error not expected in this test file - Jenna
+    // MissingOutput(assignment.failed:insufficient.permission, /silicon/issue/36/) // revive this annotation when parser error not expected in this test file - Jenna
     this.g := 1
 }

@@ -17,9 +17,10 @@ method test02(x: Ref)
   requires acc(x.f)
 {
   var k: Perm
+  //:: ExpectedOutput(parser.error)
   assume none != k && k < write
   k := (-1) * k
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert none < k
 }
 /*

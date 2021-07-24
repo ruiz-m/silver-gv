@@ -5,6 +5,7 @@ field f: Int
 field g: Int
 
 method test01(x: Ref, b: Bool)
+  //:: ExpectedOutput(parser.error)
   requires acc(x.f, b ? write : none)
 {
   assert b || forperm y: Ref [y.f] :: false
@@ -12,7 +13,7 @@ method test01(x: Ref, b: Bool)
   assert (forperm y: Ref [y.f] :: false) ==> (forperm y: Ref [y.f] :: true)
   assert (forperm y: Ref [y.f] :: false) ==> !b
 
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert forperm y: Ref [y.f] :: false
 }
 
@@ -25,7 +26,7 @@ method test01b(x: Ref, b: Bool)
 
   assert (forperm y: Ref [y.f] :: false) ==> !b
 
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert forperm y: Ref [y.f] :: false
 }
 
