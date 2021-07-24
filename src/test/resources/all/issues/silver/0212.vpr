@@ -3,6 +3,7 @@
 
 method m()
 {
+    //:: ExpectedOutput(parser.error)
     var seq: Seq[Int] 
 
     var a1:  Bool := seq[..33]    == seq

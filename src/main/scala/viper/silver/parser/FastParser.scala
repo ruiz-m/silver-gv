@@ -693,7 +693,7 @@ object FastParser extends PosParser[Char, String] {
   def file: Path = _file
 
   //No gradual keywords yet
-  // pruned label, goto, exhale, inhale, package, apply, function, forperm, Seq, Set, Multiset, let, domain, axiom, define, assume
+  // pruned label, goto, exhale, inhale, package, apply, function, forperm, Seq, Set, Multiset, let, domain, axiom, assume
   lazy val keywords = Set("result",
     // types
     "Int", "Perm", "Bool", "Ref", "Rational",
@@ -704,7 +704,7 @@ object FastParser extends PosParser[Char, String] {
     // preamble importing
     "import",
     // declaration keywords
-    "method",  "predicate", "program","var", "returns", "field",
+    "method",  "predicate", "program","var", "returns", "field", "define",
     // specifications
     "requires", "ensures", "invariant",
     // statements
@@ -961,7 +961,7 @@ object FastParser extends PosParser[Char, String] {
     case (func, args, typeGiven) => PCall(func, args, Some(typeGiven))
   }
 
-  // pruned lbl, goto, exhale, inhale, packageWand, applyWand, macroassign, defineDecl, macroref, assume, newstmt
+  // pruned lbl, goto, exhale, inhale, packageWand, applyWand, macroassign, macroref, assume, newstmt
   lazy val stmt: P[PStmt] = P(ParserExtension.newStmtAtStart | methodCall | fieldassign | localassign | fold | unfold | assertP | ifthnels | whle | varDecl | newstmt | block | ParserExtension.newStmtAtEnd)
 
   lazy val nodefinestmt: P[PStmt] = P(ParserExtension.newStmtAtStart | methodCall | fieldassign | localassign | fold | unfold | assertP | ifthnels | whle | varDecl | newstmt | block | ParserExtension.newStmtAtEnd)
@@ -1049,7 +1049,7 @@ object FastParser extends PosParser[Char, String] {
 
   lazy val applying: P[PExp] = P(keyword("applying") ~/ "(" ~ magicWandExp ~ ")" ~ "in" ~ exp).map { case (a, b) => PApplying(a, b) }
 
-  // pruned functionDecl, defineDecl, domainDecl
+  // pruned functionDecl, domainDecl
   lazy val programDecl: P[PProgram] = P((ParserExtension.newDeclAtStart | preambleImport | defineDecl | domainDecl | fieldDecl | functionDecl | predicateDecl | methodDecl | ParserExtension.newDeclAtEnd).rep).map {
     decls => {
       PProgram(
