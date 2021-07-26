@@ -692,8 +692,7 @@ object FastParser extends PosParser[Char, String] {
   /** The file we are currently parsing (for creating positions later). */
   def file: Path = _file
 
-  //No gradual keywords yet
-  // pruned label, goto, exhale, inhale, package, apply, function, forperm, Seq, Set, Multiset, let, domain, axiom, assume
+  // No gradual keywords yet
   lazy val keywords = Set("result",
     // types
     "Int", "Perm", "Bool", "Ref", "Rational",
@@ -704,25 +703,27 @@ object FastParser extends PosParser[Char, String] {
     // preamble importing
     "import",
     // declaration keywords
-    "method",  "predicate", "program","var", "returns", "field", "define",
+    "method", "function", "predicate", "program", "domain", "axiom", "var", "returns", "field", "define",
     // specifications
     "requires", "ensures", "invariant",
     // statements
-    "fold", "unfold", "new", "assert",
+    "fold", "unfold", "inhale", "exhale", "new", "assert", "assume", "package", "apply",
     // control flow
-    "while", "if", "elseif", "else",
+    "while", "if", "elseif", "else", "goto", "label",
     // sequences
-    // "Seq",
+    "Seq",
     // sets and multisets
-    // "Set", "Multiset","union", "intersection", "setminus", "subset",
+    "Set", "Multiset", "union", "intersection", "setminus", "subset",
+    // maps
+    "Map", "range",
     // prover hint expressions
-    //"unfolding", "in", "applying",
+    "unfolding", "in", "applying",
     // old expression
     "old", "lhs",
     // other expressions
-    // "let",
+    "let",
     // quantification
-    // "forall", "exists",
+    "forall", "exists", "forperm",
     // permission syntax
     "acc", "wildcard", "write", "none", "epsilon", "perm",
     // modifiers
