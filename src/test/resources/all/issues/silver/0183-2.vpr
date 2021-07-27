@@ -11,6 +11,7 @@ field data: Int
 field next: Ref
 
 predicate lseg(this: Ref, end: Ref)
+//:: ExpectedOutput(parser.error)
 {
   this != end ==>
 	acc(this.data) && acc(this.next) && lseg(this.next, end)
@@ -39,7 +40,7 @@ method insert(this: Ref, elem: Int) returns (idx: Int)
 
   if(this.head == null || elem <= this.head.data)
   {
-    //:: ExpectedOutput(parser.error)
+    // ExpectedOutput(parser.error) // revive this annotation when parser error not expected earlier in this test file - Jenna
     ... // allocate new node at this.head, fold predicates
     tmp := new(data,next) // allocate new node
     tmp.data := elem;  tmp.next := this.head
