@@ -7,12 +7,13 @@ field next: Ref
 predicate valid(this: Ref) {
      acc(this.item, write)
   && acc(this.next, write)
-  //:: ExpectedOutput(typechecker.error)
+  // ExpectedOutput(typechecker.error) // revive this annotation when parser error below not expected in this test file - Jenna
+  //:: ExpectedOutput(parser.error)
   && (this.next != null ==> acc(next.valid, write))
 }
 
 method test1()
-  //:: ExpectedOutput(typechecker.error)
+  // ExpectedOutput(typechecker.error) // revive this annotation when parser error not expected in this test file - Jenna
   requires acc(valid.item)
 {}
 /*

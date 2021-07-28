@@ -2,6 +2,7 @@
 // http://creativecommons.org/publicdomain/zero/1.0/
 
 method tests_good() {
+  //:: ExpectedOutput(parser.error)
   var x: Seq[Int] := Seq()
   assert x == Seq()
 
@@ -13,10 +14,10 @@ method tests_good() {
 }
 
 method tests_bad() {
-  //:: ExpectedOutput(typechecker.error)
+  // ExpectedOutput(typechecker.error) // revive this annotation when parser error not expected in this test file - Jenna
   var x: Seq[Int] := Seq[Ref]()
 
-  //:: ExpectedOutput(typechecker.error)
+  // ExpectedOutput(typechecker.error) // revive this annotation when parser error not expected in this test file - Jenna
   var z: Multiset[Bool] := Set[Bool]()
 
 //  var y: Set[Ref] := Set[T]()

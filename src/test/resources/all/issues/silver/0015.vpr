@@ -6,5 +6,6 @@ field f: Int
 
 method test(x: Ref)
   requires acc(x.b)
+  //:: ExpectedOutput(parser.error)
   requires !x.b ==> acc(x.f,write)
 {}

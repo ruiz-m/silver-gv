@@ -9,13 +9,14 @@ predicate P(x: Ref, p: Perm) {
 
 method test(x: Ref)
   // requires acc(P, wildcard) /* Rejected by the parser */
-  //:: ExpectedOutput(typechecker.error)
+  // ExpectedOutput(typechecker.error) // revive this annotation when parser error below not expected in this test file - Jenna
+  //:: ExpectedOutput(parser.error)
   requires acc(P(), wildcard)
-  //:: ExpectedOutput(typechecker.error)
+  // ExpectedOutput(typechecker.error) // revive this annotation when parser error not expected in this test file - Jenna
   requires acc(P(x), wildcard)
-  //:: ExpectedOutput(typechecker.error)
+  // ExpectedOutput(typechecker.error) // revive this annotation when parser error not expected in this test file - Jenna
   requires acc(P(9), wildcard)
-  //:: ExpectedOutput(typechecker.error)
+  // ExpectedOutput(typechecker.error) // revive this annotation when parser error not expected in this test file - Jenna
   requires acc(P(x, x))
   requires acc(P(x, wildcard)) /* OK */
 {}

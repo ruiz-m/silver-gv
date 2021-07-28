@@ -6,8 +6,9 @@ field f: Int
 method testAcc1(x: Ref)
   requires acc(x.f)
 {
+  //:: ExpectedOutput(parser.error)
   assume acc(x.f)
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert false
 }
 
@@ -51,7 +52,7 @@ method testPred1(x: Ref)
   requires Tree(x)
 {
   assume Tree(x)
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert false
 }
 

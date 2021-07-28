@@ -28,6 +28,7 @@ method test5()
   index := 0
 }
 
+//:: ExpectedOutput(parser.error)
 method test6(x: Int, S: Set[Int])
   requires x in S ==> x > 0
   requires x in(S intersection S) ==> true
