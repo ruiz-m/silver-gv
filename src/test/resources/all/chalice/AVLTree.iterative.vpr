@@ -49,6 +49,7 @@ field root1 : Ref
 				invariant acc(valid(n),write);
 				invariant acc(n.root,write); // changed from 4/10
 				invariant acc(udParentValid(n),write);
+				//:: ExpectedOutput(parser.error)
 				invariant unfolding acc(valid(n),write) in n.root==(this.root1);
 				invariant this.root1!=null;
 			{

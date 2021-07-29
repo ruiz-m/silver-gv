@@ -12,10 +12,11 @@
   method M(this: Ref, x: Ref, y: Ref)
     requires ((x) != (null)) && ((y) != (null)) && ((x) != (y)) && acc(valid(x), write) && acc(valid(y), write)
   {
+    //:: ExpectedOutput(parser.error)
     var i: Int := (unfolding acc(valid(x), write) in x.value)
     var j: Int := (unfolding acc(valid(y), write) in y.value)
     set(y, 0, 10);
     assert (unfolding acc(valid(x), write) in ((i) == (x.value)))
-    //:: ExpectedOutput(assert.failed:assertion.false)
+    // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
     assert (unfolding acc(valid(y), write) in ((j) == (y.value)))
   }

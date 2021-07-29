@@ -36,6 +36,7 @@
     unfold acc(inv(this), write)
   }
   method t(this: Ref)
+    //:: ExpectedOutput(parser.error)
     requires acc(tinv(this), write) && (unfolding acc(tinv(this), write) in ((this.next) != (null)))
     ensures acc(tinv(this), write) && (unfolding acc(tinv(this), write) in ((this.next) != (null)))
   {
