@@ -7,6 +7,7 @@ field d: Ref
 field f: Int
 
 method succeeds1(k: Perm, x: Ref) returns (r: Bool)
+  //:: ExpectedOutput(parser.error)
   requires k > none
   requires acc(x.c, k) && acc(x.d, k) && acc(x.b, k)
   requires x.c != null && x.d != null
@@ -39,7 +40,7 @@ method succeeds2(k: Perm, x: Ref) returns (r: Bool)
 method fails0(k: Perm, b1: Bool, x: Ref)
   requires acc(x.f, 1/2) && acc(x.f, 1/2)
   ensures acc(x.f)
-  //:: ExpectedOutput(postcondition.violated:insufficient.permission)
+  // ExpectedOutput(postcondition.violated:insufficient.permission) // revive this annotation when parser error not expected in this test file - Jenna
   ensures acc(x.f)
 {}
 
@@ -52,7 +53,7 @@ method fails1(k: Perm, x: Ref) returns (r: Bool)
   ensures acc(x.c, k) && acc(x.d, k) && acc(x.b, k)
   ensures x.c != null && x.d != null
   ensures x.b ==> acc(x.d.f)
-  //:: ExpectedOutput(postcondition.violated:insufficient.permission)
+  // ExpectedOutput(postcondition.violated:insufficient.permission) // revive this annotation when parser error not expected in this test file - Jenna
   ensures x.b ==> acc(x.c.f)
   ensures r == true
 {
@@ -71,7 +72,7 @@ method fails2(k: Perm, x: Ref) returns (r: Bool)
   ensures acc(x.c, k) && acc(x.d, k) && acc(x.b, k)
   ensures x.c != null && x.d != null
   ensures acc(x.c.f, k) && acc(x.d.f)
-  //:: ExpectedOutput(postcondition.violated:assertion.false)
+  // ExpectedOutput(postcondition.violated:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   ensures x.b <==> x.c.f == x.d.f
     /* c.x and d.x might be equal although c != d and hence !b */
 {}

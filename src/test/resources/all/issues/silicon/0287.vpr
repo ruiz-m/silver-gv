@@ -4,6 +4,7 @@
 field val:Int
 
 predicate isArray(xs:Ref)
+//:: ExpectedOutput(parser.error)
 {
     forall i:Int :: acc(xs.val)
 }

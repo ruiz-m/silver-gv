@@ -3,21 +3,22 @@
 
 field f: Int
 
+//:: ExpectedOutput(parser.error)
 method test1(xs: Seq[Int])
-  //:: ExpectedOutput(not.wellformed:seq.index.negative)
+  // ExpectedOutput(not.wellformed:seq.index.negative) // revive this annotation when parser error not expected in this test file - Jenna
   requires xs[-1] != 0
 
 method test10(xs: Seq[Int])
-  //:: ExpectedOutput(not.wellformed:seq.index.length)
+  // ExpectedOutput(not.wellformed:seq.index.length) // revive this annotation when parser error not expected in this test file - Jenna
   ensures xs[1] != 0
 
 method test2(xs: Seq[Int], n: Int)
   requires 5 < n
-  //:: ExpectedOutput(not.wellformed:seq.index.length)
+  // ExpectedOutput(not.wellformed:seq.index.length) // revive this annotation when parser error not expected in this test file - Jenna
   requires forall i: Int :: i in [0..n) ==> xs[i] != 0
 {
-  //:: ExpectedOutput(assert.failed:seq.index.length)
-  //:: MissingOutput(assert.failed:seq.index.length, /silicon/issue/34/)
+  // ExpectedOutput(assert.failed:seq.index.length) // revive this annotation when parser error not expected in this test file - Jenna
+  // MissingOutput(assert.failed:seq.index.length, /silicon/issue/34/) // revive this annotation when parser error not expected in this test file - Jenna
   assert xs[3] != 0
 }
 

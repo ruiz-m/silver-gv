@@ -4,6 +4,7 @@
 field next: Ref
 
 method test1()
+  //:: ExpectedOutput(parser.error)
   requires forall r: Ref :: { r.next } acc(r.next) // Effectively assumes false, since "all r" includes null
 {
   assert acc(null.next)

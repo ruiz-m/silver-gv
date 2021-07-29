@@ -14,6 +14,7 @@ function NodegetNext$(this: Ref): Ref
 }
 */
 predicate Nodevalid$(this: Ref) {
+  //:: ExpectedOutput(parser.error)
   acc(this.Nodenext$, wildcard) && acc(this.Nodevalue$, wildcard) && ((this.Nodenext$ != null) ==> acc(Nodevalid$(this.Nodenext$), write))
 }
 
@@ -30,7 +31,7 @@ method NodetestNestingUnfold$(this: Ref)
   requires acc(Nodevalid$(this), write)
 {
   unfold acc(Nodevalid$(this), write)
-  //:: UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/)
+  // UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/) // revive this annotation when parser error not expected in this test file - Jenna
   assert this != this.Nodenext$
   if (this.Nodenext$ != null) {
     unfold acc(Nodevalid$(this.Nodenext$), write)
@@ -44,7 +45,7 @@ method NodetestNestingFold$(this: Ref)
   requires acc(this.Nodenext$, wildcard) && acc(this.Nodevalue$, wildcard) && acc(this.Nodenext$.Nodenext$, wildcard) && acc(this.Nodenext$.Nodevalue$, wildcard) && (this.Nodenext$ != null) && (this.Nodenext$.Nodenext$ != null) && acc(Nodevalid$(this.Nodenext$.Nodenext$), write)
 {
   fold acc(Nodevalid$(this.Nodenext$), write)
-  //:: UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/)
+  // UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/) // revive this annotation when parser error not expected in this test file - Jenna
   assert this.Nodenext$ != this.Nodenext$.Nodenext$
   fold acc(Nodevalid$(this), write)
   assert this != this.Nodenext$
@@ -55,7 +56,7 @@ method NodetestNestingUnfolding$(this: Ref)
   requires this != null
   requires acc(Nodevalid$(this), write)
 {
-  //:: UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/)
+  // UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/) // revive this annotation when parser error not expected in this test file - Jenna
   assert this != (unfolding acc(Nodevalid$(this), write) in this.Nodenext$)
   if ((unfolding acc(Nodevalid$(this), write) in this.Nodenext$) != null) {
     assert (unfolding acc(Nodevalid$(this), write) in this.Nodenext$) != (unfolding acc(Nodevalid$(this), write) in (unfolding acc(Nodevalid$(this.Nodenext$), write) in this.Nodenext$.Nodenext$))
@@ -68,12 +69,12 @@ method NodetestNestingUnfoldTwo$(this: Ref)
   requires acc(Nodep$(this), write)
 {
   unfold acc(Nodep$(this), write)
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert this != this.Nodenext$
   if (this.Nodenext$ != null) {
     unfold acc(Nodeq$(this.Nodenext$), write)
-    //:: ExpectedOutput(assert.failed:assertion.false)
-    //:: MissingOutput(assert.failed:assertion.false, /Silicon/issue/34/)
+    // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
+    // MissingOutput(assert.failed:assertion.false, /Silicon/issue/34/) // revive this annotation when parser error not expected in this test file - Jenna
     assert this.Nodenext$ != this.Nodenext$.Nodenext$
     assert this != this.Nodenext$.Nodenext$
   }
@@ -84,13 +85,13 @@ method NodetestNestingFoldTwo$(this: Ref)
   requires acc(this.Nodenext$, wildcard) && acc(this.Nodevalue$, wildcard) && acc(this.Nodenext$.Nodenext$, wildcard) && acc(this.Nodenext$.Nodevalue$, wildcard) && (this.Nodenext$ != null) && (this.Nodenext$.Nodenext$ != null) && acc(Nodep$(this.Nodenext$.Nodenext$), write)
 {
   fold acc(Nodeq$(this.Nodenext$), write)
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert this != this.Nodenext$
-  //:: ExpectedOutput(assert.failed:assertion.false)
-  //:: MissingOutput(assert.failed:assertion.false, /Silicon/issue/34/)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
+  // MissingOutput(assert.failed:assertion.false, /Silicon/issue/34/) // revive this annotation when parser error not expected in this test file - Jenna
   assert this.Nodenext$ != this.Nodenext$.Nodenext$
-  //:: ExpectedOutput(assert.failed:assertion.false)
-  //:: MissingOutput(assert.failed:assertion.false, /Silicon/issue/34/)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
+  // MissingOutput(assert.failed:assertion.false, /Silicon/issue/34/) // revive this annotation when parser error not expected in this test file - Jenna
   assert this != this.Nodenext$.Nodenext$
 }
 
@@ -100,10 +101,10 @@ method NodetestNestingFoldThree$(this: Ref)
 {
   fold acc(Nodeq$(this.Nodenext$), write)
   fold acc(Nodep$(this), write)
-  //:: UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/)
+  // UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/) // revive this annotation when parser error not expected in this test file - Jenna
   assert this != this.Nodenext$
-  //:: ExpectedOutput(assert.failed:assertion.false)
-  //:: MissingOutput(assert.failed:assertion.false, /Silicon/issue/34/)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
+  // MissingOutput(assert.failed:assertion.false, /Silicon/issue/34/) // revive this annotation when parser error not expected in this test file - Jenna
   assert this.Nodenext$ != this.Nodenext$.Nodenext$
   assert this != this.Nodenext$.Nodenext$
 }
@@ -112,11 +113,11 @@ method NodetestNestingUnfoldingTwo$(this: Ref)
   requires this != null
   requires acc(Nodep$(this), write)
 {
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert this != (unfolding acc(Nodep$(this), write) in this.Nodenext$)
   if ((unfolding acc(Nodep$(this), write) in this.Nodenext$) != null) {
-    //:: ExpectedOutput(assert.failed:assertion.false)
-    //:: MissingOutput(assert.failed:assertion.false, /Silicon/issue/34/)
+    // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
+    // MissingOutput(assert.failed:assertion.false, /Silicon/issue/34/) // revive this annotation when parser error not expected in this test file - Jenna
     assert (unfolding acc(Nodep$(this), write) in this.Nodenext$) != (unfolding acc(Nodep$(this), write) in (unfolding acc(Nodeq$(this.Nodenext$), write) in this.Nodenext$.Nodenext$))
     assert this != (unfolding acc(Nodep$(this), write) in (unfolding acc(Nodeq$(this.Nodenext$), write) in this.Nodenext$.Nodenext$))
   }
@@ -126,7 +127,7 @@ method NodetestNestingUnfoldingPrecondition$(this: Ref, x: Ref)
   requires this != null
   requires acc(Nodevalid$(this), write) && (unfolding acc(Nodevalid$(this), write) in this.Nodenext$ == x)
 {
-  //:: UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/)
+  // UnexpectedOutput(assert.failed:assertion.false, /Silicon/issue/154/) // revive this annotation when parser error not expected in this test file - Jenna
   assert this != x
 }
 /*

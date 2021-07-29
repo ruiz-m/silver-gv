@@ -5,6 +5,7 @@ field next: Ref
 
 predicate valid(list: Ref) {
 		 acc(list.next, write)
+    //:: ExpectedOutput(parser.error)
 	&& (list.next != null ==> acc(valid(list.next), write))
 }
 /*
@@ -16,14 +17,14 @@ function size(list: Ref): Int
 }
 */
 method testFails1(list: Ref) {
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
 	assert list != null
 }
 
 method testFails2(list: Ref)
  	requires acc(valid(list), wildcard)
 {
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
  	assert list != null
 }
 

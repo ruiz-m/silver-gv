@@ -14,5 +14,6 @@ method insert_simpler(current: Ref, bool_val: Bool)
   fold acc(treePerm_simpler(current))
 
   assert
+    //:: ExpectedOutput(parser.error)
     current != null || unfolding acc(treePerm_simpler(current)) in true
 }

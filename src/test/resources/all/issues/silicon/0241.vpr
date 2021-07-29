@@ -3,6 +3,7 @@
 
 method test_right_assert() {
   var b: Bool
+  //:: ExpectedOutput(parser.error)
   assume b == true
 
   // 15 times b --- takes < 1s

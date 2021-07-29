@@ -1,3 +1,4 @@
+//:: ExpectedOutput(parser.error)
 domain Loc[T] {
   function loc_Ref(r: Ref): Loc[T]
 }

@@ -28,6 +28,7 @@ predicate TestV$(this$_1: Ref) {
 
 method Testfoo$(this: Ref, k$: Perm)
   requires this != null
+  //:: ExpectedOutput(parser.error)
   requires k$ > none
   requires write > k$
   requires acc(TestV$(this), write)
@@ -41,7 +42,7 @@ method Testfoo$(this: Ref, k$: Perm)
 method TestBug(this: Ref, k$_1: Perm)
   requires acc(this.Testtk$, write) && (this.Testtk$ != null) && acc(this.Testtk$.joinable$, write) && this.Testtk$.joinable$
 {
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert false
 }
 
@@ -49,7 +50,7 @@ method TestBug1(this: Ref, k$_1: Perm)
   requires acc(this.Testtk$, write) && (this.Testtk$ != null)
   requires acc(this.Testtk$.joinable$, write) && this.Testtk$.joinable$
 {
-  //:: ExpectedOutput(assert.failed:assertion.false)
+  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
   assert false
 }
 
