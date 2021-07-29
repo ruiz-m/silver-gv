@@ -10,6 +10,7 @@ predicate P(r:Ref) {
 method test(r:Ref)
   requires P(r)
   {
+      //:: ExpectedOutput(parser.error)
       assert perm(r.next) == none
       assert (unfolding P(r) in perm(r.next) == write)
   }

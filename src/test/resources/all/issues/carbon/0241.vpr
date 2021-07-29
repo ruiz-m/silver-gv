@@ -3,6 +3,7 @@
 
 field val: Int
 
+//:: ExpectedOutput(parser.error)
 domain Array {
     function loc(a: Array, i: Int): Ref
     function len(a: Array): Int

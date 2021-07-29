@@ -7,6 +7,7 @@ predicate Node(self: Ref) {
     acc(self.val)
 }
 
+//:: ExpectedOutput(parser.error)
 method foo(s: Seq[Ref])
     ensures forall i: Int :: i >= 0 && i < |s| ==> Node(s[i]) && unfolding Node(s[i]) in s[i].val >= 0
 {
