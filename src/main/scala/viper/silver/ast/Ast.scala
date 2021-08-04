@@ -196,6 +196,16 @@ trait Node extends Traversable[Node] with Rewritable {
       case Some(n: Node) => n.checkTransitively
       case _ => Seq()
     }
+
+  private var runtimeChecks: Seq[Exp] = Seq()
+
+  def getChecks(): Seq[Exp] = runtimeChecks
+
+  def addCheck(runtimeCheck: Exp): Unit = {
+    this.synchronized {
+      runtimeChecks = runtimeCheck +: runtimeChecks
+    }
+  }
 }
 
 
