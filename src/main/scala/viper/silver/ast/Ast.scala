@@ -6,6 +6,8 @@
 
 package viper.silver.ast
 
+import java.util.concurrent.atomic.AtomicInteger
+
 import scala.reflect.ClassTag
 import pretty.FastPrettyPrinter
 import utility._
@@ -13,6 +15,10 @@ import viper.silver.ast.utility.rewriter.Traverse.Traverse
 import viper.silver.ast.utility.rewriter.{Rewritable, StrategyBuilder, Traverse}
 import viper.silver.verifier.errors.ErrorNode
 import viper.silver.verifier.{AbstractVerificationError, ConsistencyError, ErrorReason}
+
+object AstNodeCounter {
+  val counter = new AtomicInteger
+}
 
 /*
 
@@ -206,6 +212,8 @@ trait Node extends Traversable[Node] with Rewritable {
       runtimeChecks = runtimeCheck +: runtimeChecks
     }
   }
+
+  val uniqueIdentifier = AstNodeCounter.counter.getAndIncrement
 }
 
 
