@@ -25,14 +25,16 @@ object Success extends VerificationResult {
 case class Failure(errors: Seq[AbstractError]) extends VerificationResult {
   override def toString = {
     s"Verification failed with ${errors.size} errors:\n  " +
-      (errors map (e => "[" + e.fullId + "] " + e.readableMessage)).mkString("\n  ")
+      (errors map (e => "[" + e.fullId + "] " + e.readableMessage))
+        .mkString("\n  ")
   }
 }
 
 /**
- * A common super-trait for errors that occur during parsing, translation or verification.
- */
+  * A common super-trait for errors that occur during parsing, translation or verification.
+  */
 trait AbstractError {
+
   /** The position where the error occured. */
   def pos: Position
 
@@ -60,33 +62,35 @@ abstract class ParseReport(message: String, pos: Position) extends AbstractError
 
 /** A parser error. */
 case class ParseError(message: String, override val pos: Position)
-  extends ParseReport(message, pos) {
+    extends ParseReport(message, pos) {
   def fullId = "parser.error"
   def readableMessage = s"Parse error: $message ($pos)"
 }
 
 /** A case class used for treating certain parser reports as non-critical. */
 case class ParseWarning(message: String, override val pos: Position)
-  extends ParseReport(message, pos) {
+    extends ParseReport(message, pos) {
   def fullId = "parser.warning"
   def readableMessage = s"Parse warning: $message ($pos)"
 }
 
 /** A case class used for treating certain type checker reports as non-critical. */
 case class TypecheckerWarning(message: String, override val pos: Position)
-  extends AbstractError {
+    extends AbstractError {
   def fullId = "typechecker.warning"
   def readableMessage = s"Type checker warning: $message ($pos)"
 }
 
 /** An error during consistency-checking an AST node */
-case class ConsistencyError(message: String, pos:Position) extends AbstractError {
+case class ConsistencyError(message: String, pos: Position)
+    extends AbstractError {
   def fullId = "consistency.error"
   def readableMessage: String = s"Consistency error: $message ($pos)"
 }
 
 /** A typechecker error. */
-case class TypecheckerError(message: String, pos: Position) extends AbstractError {
+case class TypecheckerError(message: String, pos: Position)
+    extends AbstractError {
   def fullId = "typechecker.error"
   def readableMessage = s"$message ($pos)"
 }
@@ -119,5 +123,6 @@ case class TimeoutOccurred(n: Long, units: String) extends AbstractError {
 case class AbortedExceptionally(cause: Throwable) extends AbstractError {
   def pos = NoPosition
   def fullId = "exceptional.error"
-  def readableMessage = s"Verification aborted exceptionally"
+  def readableMessage =
+    s"Verification aborted exceptionally: ${cause.getMessage}"
 }
