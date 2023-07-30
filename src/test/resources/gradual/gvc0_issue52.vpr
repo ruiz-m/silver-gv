@@ -1,0 +1,76 @@
+ field Cell$value: Int
+ field Node$next: Ref
+ field Node$val: Int
+ predicate acyclic(n: Ref) {
+   acc(acyclicSeg(n, null), write)
+ }
+ predicate acyclicSeg(s: Ref, e: Ref) {
+   (s == e ? true : acc(s.Node$val, write) && acc(s.Node$next, write) && acc(acyclicSeg(s.Node$next, e), write))
+ }
+ predicate even(v: Int) {
+   (v >= 0 && v == 0 ? true : acc(odd(v - 1), write))
+ }
+ predicate f(x: Int) {
+   (x > 2 ? acc(imprecise(), write) : true)
+ }
+ predicate g(c: Ref) {
+   acc(c.Cell$value, write)
+ }
+ predicate h(x: Int, c: Ref) {
+   (x > 2 ? true : acc(g(c), write))
+ }
+ predicate imprecise() {
+   ? && true
+ }
+ predicate odd(v: Int) {
+   (v >= 0 && v == 0 ? false : acc(even(v - 1), write))
+ }
+ method bar(c: Ref, v: Int) returns ($result: Int)
+   requires acc(h(v, c), write) && acc(f(v), write)
+   ensures true
+ {
+   $result := v
+ }
+ method foo(l: Ref) returns ($result: Int)
+   requires acc(acyclic(l), write)
+   ensures $result == 0
+ {
+   $result := 0
+ }
+ method main() returns ($result: Int)
+ {
+   var l: Ref
+   var c: Ref
+   var tmp1: Int
+   var b: Bool
+   var tmp2: Int
+   l := new(Node$val, Node$next)
+   l.Node$val := 2
+   l.Node$next := null
+   fold acc(acyclicSeg(l.Node$next, null), write)
+   fold acc(acyclicSeg(l, null), write)
+   fold acc(acyclic(l), write)
+   c := new(Cell$value)
+   c.Cell$value := 2
+   tmp1 := foo(l)
+   c.Cell$value := 3
+   fold acc(even(0), write)
+   fold acc(odd(1), write)
+   fold acc(even(2), write)
+   fold acc(odd(3), write)
+   fold acc(even(4), write)
+   b := recursion(4)
+   c.Cell$value := 2
+   fold acc(f(1), write)
+   fold acc(g(c), write)
+   fold acc(h(1, c), write)
+   tmp2 := bar(c, 1)
+   c.Cell$value := 4
+   $result := 0
+ }
+ method recursion(v: Int) returns ($result: Bool)
+   requires acc(even(v), write)
+   ensures true
+ {
+   $result := true
+ }
