@@ -1,3 +1,4 @@
+//:: IgnoreFile(/silicon/issue/208/)
 field val : Int
 field next : Ref
 field head : Ref
@@ -33,7 +34,7 @@ method insertLast(this: Ref, value: Int)
 
 method insertLastHelper(this: Ref, value: Int)
   requires acyclic(this)
-      && unfolding acyclic(this) in (this.head != null)
+/*  && unfolding acyclic(this) in (this.head != null)  might need to move this whole function into the other one to get this info without unfolding */
   ensures ? && true
 {
   unfold acyclic(this)

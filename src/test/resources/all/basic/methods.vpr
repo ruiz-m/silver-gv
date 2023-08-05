@@ -61,9 +61,9 @@ method t5_a(r: Ref)
  }
 
  method t5_b(r: Ref)
+    //:: ExpectedOutput(not.wellformed:insufficient.permission)
     requires r != null
-     //:: ExpectedOutput(not.wellformed:insufficient.permission)
-     requires r.f == 2
+    requires r.f == 2
  {
  }
 

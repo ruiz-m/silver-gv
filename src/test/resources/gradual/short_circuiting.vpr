@@ -1,0 +1,45 @@
+field val: Int
+field next: Ref
+
+method checkGcd0(left: Int, right: Int)
+  requires left >= 0 && right >= 0
+  //:: ExpectedOutput(not.wellformed:division.by.zero)
+  ensures right == 0 || (left % right >= 0)
+{ 
+}
+
+method checkGcd1(left: Int, right: Int)
+  requires left >= 0 && right >= 0
+  ensures right == 0 ? true : left % right >= 0
+{ 
+}
+
+method check0(n: Ref) 
+ requires acc(n.val) && acc(n.next) && (n.next == null ? true : acc(n.next.val) && n.next.val >= 4) 
+ ensures true 
+{
+  //:: ExpectedOutput(assert.failed:insufficient.permission)
+  assert (n.next == null || n.next.val >= 4)
+}
+
+method check1(n: Ref) 
+ requires acc(n.val) && acc(n.next) && (n.next == null ? true : acc(n.next.val) && n.next.val >= 4) 
+ ensures true 
+{
+  assert n.next == null ? true : n.next.val >= 4
+}
+
+method test0(n: Ref) 
+ requires ? && acc(n.next) 
+ ensures true 
+{
+  assert (n.next != null && n.next.val <= 4) == (n.next != null && n.next.val <= 4)
+}
+
+method test1(n: Ref) 
+ requires acc(n.next) && n.next == null
+ ensures true 
+{
+  //:: ExpectedOutput(assert.failed:insufficient.permission)  
+  assert (n.next != null && n.next.val <= 4) == (n.next != null && n.next.val <= 4)
+}

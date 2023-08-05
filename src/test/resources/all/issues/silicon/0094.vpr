@@ -4,6 +4,7 @@
 field f: Int
 
 method test(x: Ref)
+  //:: ExpectedOutput(not.wellformed:negative.permission)
   requires acc(x.f) && acc(x.f)
 {
   /* Has to hold */

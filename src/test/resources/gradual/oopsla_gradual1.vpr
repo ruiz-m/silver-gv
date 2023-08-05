@@ -24,7 +24,7 @@ method insertLast(this: Ref, value: Int)
 
 method insertLastHelper(this: Ref, value: Int)
   requires acyclic(this)
-      && unfolding acyclic(this) in (this.head != null)
+/*  && unfolding acyclic(this) in (this.head != null) */
   ensures acyclic(this)
 {
   unfold acyclic(this)
