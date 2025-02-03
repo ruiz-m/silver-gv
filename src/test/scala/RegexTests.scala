@@ -5,14 +5,15 @@
 // Copyright (c) 2011-2019 ETH Zurich.
 
 import java.nio.file.Paths
+
 import scala.collection.mutable
 import TestHelpers.{FileComparisonHelper, MockSilFrontend}
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 import viper.silver.ast._
 import viper.silver.ast.utility.rewriter._
 import viper.silver.ast.utility._
 
-class RegexTests extends FunSuite with FileComparisonHelper {
+class RegexTests extends AnyFunSuite with FileComparisonHelper {
   test("Sharing") {
     val shared = FalseLit()()
     val sharedAST = And(Not(shared)(), shared)()
@@ -31,8 +32,6 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     }
   }
 
-  // tf relies on functions
-  /*
   test("Performance_BinomialHeap") {
     val fileName = "transformations/Performance/BinomialHeap"
 
@@ -57,10 +56,8 @@ class RegexTests extends FunSuite with FileComparisonHelper {
 //    time(strat.execute[Program](targetNode))
     strat.execute[Program](targetNode)
   }
-  */
 
-  // seems to use inhaleExhale for |
-  /*
+
   test("DisjunctionToInhaleExhaleTests") {
     val filePrefix = "transformations/DisjunctionToInhaleExhale/"
     val files = Seq("simple", "nested", "functions")
@@ -134,12 +131,10 @@ class RegexTests extends FunSuite with FileComparisonHelper {
               """.stripMargin)
     })
   }
-  */
 
-  // tf simple and complex have inhale
   test("ComplexMatching") {
     val filePrefix = "transformations/ComplexMatching/"
-    val files = Seq()
+    val files = Seq("simple", "complex")
 
     // Regular expression
     val t = TreeRegexBuilder.context[Node, Int](_ + _, math.max, 0)
@@ -149,9 +144,6 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     files foreach { name => executeTest(filePrefix, name, strat, frontend)}
   }
 
-
-  // test uses ==>
-/*
   test("PresentationSlides") {
 
     val filePrefix = "transformations/PresentationSlides/"
@@ -178,10 +170,7 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     val frontend = new MockSilFrontend
     files foreach { name => executeTest(filePrefix, name, strat, frontend) }
   }
-*/
 
-  // test uses GoTo
-/*
   test("WhileToIfAndGoto") {
     val filePrefix = "transformations/WhileToIfAndGoto/"
     val files = Seq("simple", "nested")
@@ -211,14 +200,12 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     }
     }
   }
-*/
 
-  // test file "interrupted" contains inhale
-  // test file "nestedBlocks" contains macros
+
   test("ManyToOneAssert") {
     val filePrefix = "transformations/ManyToOneAssert/"
-    val files = Seq("simple", "nested")
-    var accumulator: mutable.ListBuffer[Exp] = mutable.ListBuffer.empty[Exp]
+    val files = Seq("simple", "interrupted", "nested", "nestedBlocks")
+    val accumulator: mutable.ListBuffer[Exp] = mutable.ListBuffer.empty[Exp]
 
     val t = TreeRegexBuilder.ancestor[Node]
     val strat = t &> n.r[Assert] |-> {
@@ -241,10 +228,10 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     }
   }
 
-  // tf fourAnd relies on functions
+
   test("UnfoldedChildren") {
     val filePrefix = "transformations/UnfoldedChildren/"
-    val files = Seq()
+    val files = Seq("fourAnd")
 
     val t = TreeRegexBuilder.ancestor[Node]
     val strat = t &> n.P[FuncApp]( _.funcname == "fourAnd") > n.r[Exp] |-> { case (e:Exp, c) => if(c.siblings.contains(FalseLit()())) (FalseLit()(), c) else (e, c) }
@@ -256,8 +243,6 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     }
   }
 
-  // uses inhale
-  /*
   test("MethodCallDesugaring") {
     // Careful: Don't use old inside postcondition. It is not yet supported. maybe I will update the testcase (or not)
     val filePrefix = "transformations/MethodCallDesugaring/"
@@ -292,7 +277,6 @@ class RegexTests extends FunSuite with FileComparisonHelper {
     }
     }
   }
-  */
 
   test("CopyPropagation") {
     val filePrefix = "transformations/CopyPropagation/"

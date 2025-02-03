@@ -4,17 +4,14 @@
 //
 // Copyright (c) 2011-2019 ETH Zurich.
 
-// tests are about domains
-
-/*
-
-
 import java.nio.file.Paths
+
 import TestHelpers.MockSilFrontend
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 import viper.silver.ast._
 
-class DomainInstanceTest extends FunSuite with Matchers {
+class DomainInstanceTest extends AnyFunSuite with Matchers {
   test("Basic domain instances") {
     val t = TypeVar("T")
     val d = Domain("D", Seq(), Seq(), Seq(t))(NoPosition, NoInfo)
@@ -101,4 +98,3 @@ class DomainInstanceTest extends FunSuite with Matchers {
     }
   }
 }
-*/

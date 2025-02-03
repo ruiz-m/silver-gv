@@ -6,18 +6,16 @@ field f: Ref
 predicate P(r: Ref) {
   acc(r.f) &&
   Q(r.f) &&
-  //:: ExpectedOutput(parser.error)
   unfolding Q(r.f) in true
 }
 
 predicate Q(r: Ref) {true}
 
-method test01(r: Ref) returns ()
-  requires acc(P(r))
-{
+method test01(r: Ref) returns () {
+  inhale acc(P(r))
   unfold acc(P(r), wildcard)
 
-  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
+  //:: ExpectedOutput(assert.failed:assertion.false)
   assert false
 }
 
@@ -28,9 +26,8 @@ predicate Rec(x: Ref) {
   && (x.f != null ==> acc(Rec(x.f), wildcard))
 }
 
-method test02(x: Ref)
-  requires Rec(x)
-{
+method test02(x: Ref) {
+  inhale Rec(x)
   var y: Ref := unfolding Rec(x) in x.f
 }
 
@@ -52,6 +49,6 @@ method Router__process_data_3_3(spkt: Ref) returns ()
   requires acc(SP_State(spkt), 1/2)
   requires (unfolding acc(SP_State(spkt), wildcard) in true )
 {
-  // ExpectedOutput(assert.failed:assertion.false) // revive this annotation when parser error not expected in this test file - Jenna
+  //:: ExpectedOutput(assert.failed:assertion.false)
   assert false
 }
