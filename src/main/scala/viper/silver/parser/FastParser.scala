@@ -451,16 +451,21 @@ class FastParser {
   }).pos
 
   //change iffExp to orExpr???
+  //The iffExp might have something to do with precedence
   def iteExpr[$: P](bracketed: Boolean = false): P[PExp] = P((iffExp(bracketed) ~~~ (P(PSymOp.Question) ~ iteExpr() ~ PSymOp.Colon ~ iteExpr()).lw.?).map {
     case (lhs, b) => pos: Pos => b.map { case (q, thn, c, els) => PCondExp(lhs, q, thn, c, els)(pos) }.getOrElse(lhs)
   }).pos
-
-  //Add gradExp ???
 
   /** Expression which had parens around it if `bracketed` is true */
   def expParen[$: P](bracketed: Boolean): P[PExp] = P(iteExpr(bracketed))
 
   def exp[$: P]: P[PExp] = P(expParen(false))
+  
+  //Add gradExp ???
+  //Not entirely sure why P executes PSymOp.Question, but not PSymOp.AndAnd
+  /*def gradExp[$: P]: P[PExp] = P((P(PSymOp.Question) ~ PSymOp.AndAnd ~ (parenthesizedExp | exp)).map {
+    case (q, a, e) => pos: Pos => e.map { case (e) => PImpreciseExp(e)(pos) }
+  }).pos*/
 
   /** Expression should be parenthesized (e.g. for `if (exp)`). We could consider making these parentheses optional in the future. */
   def parenthesizedExp[$: P]: P[PGrouped.Paren[PExp]] = exp.parens

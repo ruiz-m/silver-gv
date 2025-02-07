@@ -656,9 +656,8 @@ trait PExp extends PNode with PPrettySubnodes {
   }
 }
 
-case class PImpreciseExp(e: PExp) extends POpApp{
+case class PImpreciseExp(e: PExp)(val pos: (Position, Position)) extends POpApp{
   //"Imprecise" expression
-  override val opName = "?"
   override val args = Seq(e)
   val signatures : List[PTypeSubstitution] = List(
       Map(POpApp.pResS -> POpApp.pArg(0))
