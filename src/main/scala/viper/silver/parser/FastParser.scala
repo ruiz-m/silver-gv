@@ -782,7 +782,7 @@ class FastParser {
         case "define" if !allowDefine => Fail
         //case "goto" => goto.map(_(PReserved(PKw.Goto)(pos)))
         //case "label" => label.map(_(PReserved(PKw.Label)(pos)))
-        case "package" => packageWand.map(_(PReserved(PKw.Package)(pos)))
+        //case "package" => packageWand.map(_(PReserved(PKw.Package)(pos)))
         case "apply" => applyWand.map(_(PReserved(PKw.Apply)(pos)))
         case "quasihavoc" => quasihavoc.map(_(PReserved(PKw.Quasihavoc)(pos)))
         case "quasihavocall" => quasihavocall.map(_(PReserved(PKw.Quasihavocall)(pos)))
@@ -849,12 +849,15 @@ class FastParser {
 
   //Add gradInv GRADV
   def whileStmt[$: P]: P[PKw.While => Pos => PWhile] =
-    P((parenthesizedExp ~~ semiSeparated(invariant) ~ stmtBlock()) map { case (cond, invs, body) => PWhile(_, cond, invs, body) })
+    P((parenthesizedExp ~~ semiSeparated(invariant | gradInvariant) ~ stmtBlock()) map { case (cond, invs, body) => PWhile(_, cond, invs, body) })
 
   //Check changes GRADV
   def invariant(implicit ctx : P[_]) : P[PSpecification[PKw.InvSpec]] = P((P(PKw.Invariant) ~ exp).map((PSpecification.apply _).tupled).pos | ParserExtension.invSpecification(ctx))
 
   //Add def gradInv GRADV
+  def gradInvariant(implicit ctx : P[_]) : P[PSpecification[PKw.InvSpec]] = P((P(PKw.Invariant) ~ gradExp).map((PSpecification.apply _).tupled).pos | ParserExtension.invSpecification(ctx))
+    
+
   def localVars[$: P]: P[PKw.Var => Pos => PVars] =
     P((nonEmptyIdnTypeList(PLocalVarDecl(_)) ~~~ (P(PSymOp.Assign) ~ exp).lw.?) map { case (a, i) => PVars(_, a, i) })
 
@@ -968,16 +971,14 @@ class FastParser {
   })
 
 
-  //Pre maybe here GRADV
   def precondition(implicit ctx : P[_]) : P[PSpecification[PKw.PreSpec]] = P((P(PKw.Requires) ~ exp).map((PSpecification.apply _).tupled).pos | ParserExtension.preSpecification(ctx))
 
-  //Post maybe here GRADV
   def postcondition(implicit ctx : P[_]) : P[PSpecification[PKw.PostSpec]] = P((P(PKw.Ensures) ~ exp).map((PSpecification.apply _).tupled).pos | ParserExtension.postSpecification(ctx))
 
   //Add grad pre and grad post GRADV
-  def gradpre(implicit ctx : P[_]) : P[PSpecification[PKw.PreSpec]] = P((P(PKw.Requires) ~ exp).map((PSpecification.apply _).tupled).pos | ParserExtension.preSpecification(ctx))
+  def gradpre(implicit ctx : P[_]) : P[PSpecification[PKw.PreSpec]] = P((P(PKw.Requires) ~ gradExp).map((PSpecification.apply _).tupled).pos | ParserExtension.preSpecification(ctx))
   
-  def gradpost(implicit ctx : P[_]) : P[PSpecification[PKw.PostSpec]] = P((P(PKw.Ensures) ~ exp).map((PSpecification.apply _).tupled).pos | ParserExtension.postSpecification(ctx))
+  def gradpost(implicit ctx : P[_]) : P[PSpecification[PKw.PostSpec]] = P((P(PKw.Ensures) ~ gradExp).map((PSpecification.apply _).tupled).pos | ParserExtension.postSpecification(ctx))
   
   //Place gradExp here GRADV
   def predicateDecl[$: P]: P[PKw.Predicate => PAnnotationsPosition => PPredicate] = P(idndef ~ argList(formalArg) ~~~ (bracedExp | bracedGradExp).lw.?).map {
@@ -987,7 +988,7 @@ class FastParser {
 
   //Add gradpre and grad post here GRADV
   def methodDecl[$: P]: P[PKw.Method => PAnnotationsPosition => PMethod] =
-    P((idndef ~ argList(formalArg) ~~~ methodReturns.lw.? ~~ semiSeparated(precondition) ~~ semiSeparated(postcondition) ~~~ stmtBlock().lw.?) map {
+    P((idndef ~ argList(formalArg) ~~~ methodReturns.lw.? ~~ semiSeparated(precondition | gradpre) ~~ semiSeparated(postcondition | gradpost) ~~~ stmtBlock().lw.?) map {
         case (idn, args, rets, pres, posts, body) => k =>
           ap: PAnnotationsPosition => PMethod(ap.annotations, k, idn, args, rets, pres, posts, body)(ap.pos)
     })
