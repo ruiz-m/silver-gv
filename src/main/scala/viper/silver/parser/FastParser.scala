@@ -450,22 +450,19 @@ class FastParser {
     case (lhs, b) => pos: Pos => b.map { case (op, rhs) => PBinExp(lhs, op, rhs)(pos) }.getOrElse(lhs)
   }).pos
 
-  //change iffExp to orExpr GRADV
-  //The iffExp might have something to do with precedence
   def iteExpr[$: P](bracketed: Boolean = false): P[PExp] = P((iffExp(bracketed) ~~~ (P(PSymOp.Question) ~ iteExpr() ~ PSymOp.Colon ~ iteExpr()).lw.?).map {
     case (lhs, b) => pos: Pos => b.map { case (q, thn, c, els) => PCondExp(lhs, q, thn, c, els)(pos) }.getOrElse(lhs)
   }).pos
 
+  def gradExp[$: P](bracketed: Boolean = false): P[PExp] = P(((P(PSymOp.Question) ~ PSymOp.AndAnd).? ~ iteExpr(bracketed)).map {
+    case (q, e) => pos: Pos => q.map { case (_, _) => PImpreciseExp(e)(pos) }.getOrElse(e)
+  }).pos
+
   /** Expression which had parens around it if `bracketed` is true */
-  def expParen[$: P](bracketed: Boolean): P[PExp] = P(iteExpr(bracketed))
+  def expParen[$: P](bracketed: Boolean): P[PExp] = P(gradExp(bracketed))
   
   def exp[$: P]: P[PExp] = P(expParen(false))
   
-  //Add gradExp GRADV
-  def gradExp[$: P]: P[PExp] = P((P(PSymOp.Question) ~ PSymOp.AndAnd ~ (expParen(false) | expParen(true))).map {
-    case (_, _, e) => pos: Pos => PImpreciseExp(e)(pos)
-  }).pos
-
   /** Expression should be parenthesized (e.g. for `if (exp)`). We could consider making these parentheses optional in the future. */
   def parenthesizedExp[$: P]: P[PGrouped.Paren[PExp]] = exp.parens
 
@@ -574,18 +571,20 @@ class FastParser {
   //helper for accessPredImpl
   def write[$: P]: P[PExp] = { 
     reservedKwMany(
-      StringIn("write"), 
-      str => pos => str match 
-        { case "write" => Pass.map(_ => PFullPerm(PReserved(PKw.Write)(pos))(_))  }
+      StringIn("write", "1"), 
+      str => pos => str match { 
+          case "write" => Pass.map(_ => PFullPerm(PReserved(PKw.Write)(pos))(_))
+          case "1" => Pass.map(_ => PFullPerm(PReserved(PKw.Write)(pos))(_))
+        }
     ).pos 
   }
 
-  def strOne[$: P]: P[String] = P(CharIn("1").!./)
+  //def strOne[$: P]: P[String] = P(CharIn("1").!./)
 
-  def one[$: P]: P[PIntLit] = P((strInteger) map { s => PIntLit(BigInt(s))(_) }).pos
+  //def one[$: P]: P[PExp] = P((strOne) map { s => PFullPerm })
 
-  // Replace exp with ("1"| "write") GRADV
-  def accessPredImpl[$: P]: P[PKwOp.Acc => Pos => PAccPred] = P(maybePairArgument(locAcc, /*exp*/(one | write)).parens map { arg => PAccPred(_, arg) })
+  // Replace exp with ("1" or "write") GRADV
+  def accessPredImpl[$: P]: P[PKwOp.Acc => Pos => PAccPred] = P(maybePairArgument(locAcc, /*exp*/write).parens map { arg => PAccPred(_, arg) })
 
   def accessPred[$: P]: P[PAccPred] = P((P(PKwOp.Acc) ~ accessPredImpl) map { case (k, f) => f(k) }).pos
 
@@ -602,7 +601,6 @@ class FastParser {
 
   def predAcc[$: P]: P[PCall] = funcApp
 
-  //Nothing to change GRADV
   def perm[$: P]: P[PKwOp.Perm => Pos => PCurPerm] = P(resAcc.parens map { r => PCurPerm(_, r) })
 
   def let[$: P]: P[PKwOp.Let => Pos => PExp] =
@@ -684,7 +682,6 @@ class FastParser {
   }
 
   // change predAcc GRADV
-  // Hierachy issue resolve for keyword op acc and kw write
   def predicateAccessAssertion[$: P]: P[PAccAssertion] = P(accessPred | predAcc.map {
     loc => {
       val perm = PFullPerm(PReserved(PKw.Write)(loc.pos))(loc.pos)
@@ -847,16 +844,10 @@ class FastParser {
   def elseBlock[$: P]: P[PElse] =
     P((P(PKw.Else) ~ stmtBlock()) map (PElse.apply _).tupled).pos
 
-  //Add gradInv GRADV
   def whileStmt[$: P]: P[PKw.While => Pos => PWhile] =
-    P((parenthesizedExp ~~ semiSeparated(invariant | gradInvariant) ~ stmtBlock()) map { case (cond, invs, body) => PWhile(_, cond, invs, body) })
+    P((parenthesizedExp ~~ semiSeparated(invariant) ~ stmtBlock()) map { case (cond, invs, body) => PWhile(_, cond, invs, body) })
 
-  //Check changes GRADV
-  def invariant(implicit ctx : P[_]) : P[PSpecification[PKw.InvSpec]] = P((P(PKw.Invariant) ~ exp).map((PSpecification.apply _).tupled).pos | ParserExtension.invSpecification(ctx))
-
-  //Add def gradInv GRADV
-  def gradInvariant(implicit ctx : P[_]) : P[PSpecification[PKw.InvSpec]] = P((P(PKw.Invariant) ~ gradExp).map((PSpecification.apply _).tupled).pos | ParserExtension.invSpecification(ctx))
-    
+  def invariant(implicit ctx : P[_]) : P[PSpecification[PKw.InvSpec]] = P((P(PKw.Invariant) ~ exp).map((PSpecification.apply _).tupled).pos | ParserExtension.invSpecification(ctx)) 
 
   def localVars[$: P]: P[PKw.Var => Pos => PVars] =
     P((nonEmptyIdnTypeList(PLocalVarDecl(_)) ~~~ (P(PSymOp.Assign) ~ exp).lw.?) map { case (a, i) => PVars(_, a, i) })
@@ -881,14 +872,14 @@ class FastParser {
 
   def memberReservedKw[$: P]: P[PAnnotationsPosition => PMember] = {
     reservedKwMany(
-      StringIn("import", "define", "field", "method", /*"domain", "function",*/ "predicate"),
+      StringIn("import", "define", "field", "method", /*"domain",*/ "function", "predicate"),
       str => pos => str match {
         case "import" => preambleImport.map(_(PReserved(PKw.Import)(pos)))
         case "define" => defineDecl.map(_(PReserved(PKw.Define)(pos)))
         case "field" => fieldDecl.map(_(PReserved(PKw.Field)(pos)))
         case "method" => methodDecl.map(_(PReserved(PKw.Method)(pos)))
         //case "domain" => domainDecl.map(_(PReserved(PKw.Domain)(pos)))
-        //case "function" => functionDecl.map(_(PReserved(PKw.Function)(pos)))
+        case "function" => functionDecl.map(_(PReserved(PKw.Function)(pos)))
         case "predicate" => predicateDecl.map(_(PReserved(PKw.Predicate)(pos)))
       }
     )
@@ -897,7 +888,7 @@ class FastParser {
   def programMember(implicit ctx : P[_]): P[PMember] =
     annotated(ParserExtension.newDeclAtStart(ctx) | memberReservedKw | ParserExtension.newDeclAtEnd(ctx))
 
-  // prune functiondecl, domaindecl GRADV
+  // prune domaindecl GRADV
   def programDecl[$: P]: P[PProgram] =
     P(programMember.rep map (members => {
       val warnings = _warnings
@@ -954,7 +945,7 @@ class FastParser {
 
   def bracedExp[$: P]: P[PBracedExp] = P(exp.braces map (PBracedExp(_) _)).pos
 
-  def bracedGradExp[$: P]: P[PBracedExp] = P(gradExp.braces map (PBracedExp(_) _)).pos
+  //def bracedGradExp[$: P]: P[PBracedExp] = P(gradExp.braces map (PBracedExp(_) _)).pos
 
   def axiomDecl[$: P]: P[PAnnotationsPosition => PAxiom1] = P(P(PKw.Axiom) ~ idndef.? ~ bracedExp ~~~ P(PSym.Semi).lw.?).map { case (k, a, b, s) =>
     ap: PAnnotationsPosition => PAxiom1(ap.annotations, k, a, b, s)(ap.pos)
@@ -974,21 +965,14 @@ class FastParser {
   def precondition(implicit ctx : P[_]) : P[PSpecification[PKw.PreSpec]] = P((P(PKw.Requires) ~ exp).map((PSpecification.apply _).tupled).pos | ParserExtension.preSpecification(ctx))
 
   def postcondition(implicit ctx : P[_]) : P[PSpecification[PKw.PostSpec]] = P((P(PKw.Ensures) ~ exp).map((PSpecification.apply _).tupled).pos | ParserExtension.postSpecification(ctx))
-
-  //Add grad pre and grad post GRADV
-  def gradpre(implicit ctx : P[_]) : P[PSpecification[PKw.PreSpec]] = P((P(PKw.Requires) ~ gradExp).map((PSpecification.apply _).tupled).pos | ParserExtension.preSpecification(ctx))
-  
-  def gradpost(implicit ctx : P[_]) : P[PSpecification[PKw.PostSpec]] = P((P(PKw.Ensures) ~ gradExp).map((PSpecification.apply _).tupled).pos | ParserExtension.postSpecification(ctx))
-  
-  //Place gradExp here GRADV
-  def predicateDecl[$: P]: P[PKw.Predicate => PAnnotationsPosition => PPredicate] = P(idndef ~ argList(formalArg) ~~~ (bracedExp | bracedGradExp).lw.?).map {
+ 
+  def predicateDecl[$: P]: P[PKw.Predicate => PAnnotationsPosition => PPredicate] = P(idndef ~ argList(formalArg) ~~~ bracedExp.lw.?).map {
     case (idn, args, c) => k =>
       ap: PAnnotationsPosition => PPredicate(ap.annotations, k, idn, args, c)(ap.pos)
   }
 
-  //Add gradpre and grad post here GRADV
   def methodDecl[$: P]: P[PKw.Method => PAnnotationsPosition => PMethod] =
-    P((idndef ~ argList(formalArg) ~~~ methodReturns.lw.? ~~ semiSeparated(precondition | gradpre) ~~ semiSeparated(postcondition | gradpost) ~~~ stmtBlock().lw.?) map {
+    P((idndef ~ argList(formalArg) ~~~ methodReturns.lw.? ~~ semiSeparated(precondition) ~~ semiSeparated(postcondition) ~~~ stmtBlock().lw.?) map {
         case (idn, args, rets, pres, posts, body) => k =>
           ap: PAnnotationsPosition => PMethod(ap.annotations, k, idn, args, rets, pres, posts, body)(ap.pos)
     })

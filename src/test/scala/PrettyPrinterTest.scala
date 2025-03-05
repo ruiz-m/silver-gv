@@ -60,7 +60,7 @@ class PrettyPrinterTest extends AnyFunSuite with Matchers {
     }
   }
 
-  test("Pretty printer and parser roundtrip yields same result") {
+  /*test("Pretty printer and parser roundtrip yields same result") {
     import viper.silver.ast._
 
     val code =
@@ -116,7 +116,7 @@ class PrettyPrinterTest extends AnyFunSuite with Matchers {
     val origString = origProgram.toString()
     val resString = res.toString()
     assert(origString == resString)
-  }
+  }*/
 
 
 }

@@ -912,6 +912,7 @@ object FastPrettyPrinter extends FastPrettyPrinterBase with BracketPrettyPrinter
       case DebugPermMin(e0, e1) => text("min") <> parens(show(e0) <> "," <+> show(e1))
       case b: PrettyBinaryExpression => showPrettyBinaryExp(b)
       case e: ExtensionExp => e.prettyPrint
+      case ImpreciseExp(e) => text("? &&") <+> show(e)
       case _ => sys.error(s"unknown expression: ${e.getClass}")
     }
     val annotation = showAnnotation(e.asInstanceOf[Infoed], false)

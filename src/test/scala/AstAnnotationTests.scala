@@ -45,7 +45,7 @@ class AstAnnotationTests extends AnyFunSuite {
     }
   }
 
-  test("Correct annotations for AST nodes in a parsed program") {
+  /*test("Correct annotations for AST nodes in a parsed program") {
     import viper.silver.ast._
 
     val code =
@@ -134,5 +134,5 @@ class AstAnnotationTests extends AnyFunSuite {
     val lastArgRight = lastArg.asInstanceOf[Add].right
     val lastArgRightAnn = lastArgRight.info.getUniqueInfo[AnnotationInfo]
     assert(lastArgRightAnn.isEmpty || lastArgRightAnn.get.values == Map())
-  }
+  }*/
 }

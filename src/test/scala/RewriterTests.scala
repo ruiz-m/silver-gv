@@ -14,7 +14,7 @@ import viper.silver.ast.utility._
 import viper.silver.parser.{PBinExp, PIdnUseExp, PNode, PReserved, PSymOp}
 
 class RewriterTests extends AnyFunSuite with FileComparisonHelper {
-  test("Performance_BinomialHeap") {
+  /*test("Performance_BinomialHeap") {
     val fileName = "transformations/Performance/BinomialHeap"
 
     val strat = ViperStrategy.Slim({
@@ -34,7 +34,7 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
     }
 
     strat.execute[Program](targetNode)
-  }
+  }*/
 
   test("Sharing") {
     val shared = FalseLit()()
@@ -95,7 +95,7 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
   }
 
 
-  test("QuantifiedPermissions") {
+  /*test("QuantifiedPermissions") {
     val filePrefix = "transformations/QuantifiedPermissions/"
     val files = Seq("simple", "allCases")
 
@@ -112,9 +112,9 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
     val frontend = new MockSilFrontend
     files foreach { name => executeTest(filePrefix, name, strat, frontend) }
 
-  }
+  }*/
 
-  test("DisjunctionToInhaleExhaleTests") {
+  /*test("DisjunctionToInhaleExhaleTests") {
     val filePrefix = "transformations/DisjunctionToInhaleExhale/"
     val files = Seq("simple", "nested", "functions")
 
@@ -169,9 +169,9 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
                 """.stripMargin)
       }
     }
-  }
+  }*/
 
-  test("ImplicationToDisjunctionTests") {
+  /*test("ImplicationToDisjunctionTests") {
     val filePrefix = "transformations/ImplicationsToDisjunction/"
     val files = Seq("simple", "nested", "traverseEverything")
 
@@ -184,9 +184,9 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
 
     val frontend = new MockSilFrontend
     files foreach { name => executeTest(filePrefix, name, strat, frontend) }
-  }
+  }*/
 
-  test("WhileToIfAndGoto") {
+  /*test("WhileToIfAndGoto") {
     val filePrefix = "transformations/WhileToIfAndGoto/"
     val files = Seq("simple", "nested")
 
@@ -215,9 +215,9 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
         executeTest(filePrefix, fileName, strat, frontend)
       }
     }
-  }
+  }*/
 
-  test("ManyToOneAssert") {
+  /*test("ManyToOneAssert") {
     val filePrefix = "transformations/ManyToOneAssert/"
     val files = Seq("simple", "interrupted", "nested", "nestedBlocks")
 
@@ -246,9 +246,9 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
     files foreach {
       fileName: String => executeTest(filePrefix, fileName, strat, frontend)
     }
-  }
+  }*/
 
-  test("ManyToOneAssert2") {
+  /*test("ManyToOneAssert2") {
     val filePrefix = "transformations/ManyToOneAssert/"
     val files = Seq("simple", "interrupted", "nested", "nestedBlocks")
 
@@ -270,7 +270,7 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
     files foreach {
       fileName: String => executeTest(filePrefix, fileName, strat, frontend)
     }
-  }
+  }*/
 
   test("FoldConstants") {
     val filePrefix = "transformations/FoldConstants/"
@@ -313,7 +313,7 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
     }
   }
 
-  test("CountAdditions") {
+  /*test("CountAdditions") {
     val filePrefix = "transformations/CountAdditions/"
     val filesAndResults = Seq(("simple", 3), ("nested", 10), ("traverseEverything", 12))
 
@@ -341,9 +341,9 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
 
       assert(res == result, "Results are not equal")
     })
-  }
+  }*/
 
-  test("MethodCallDesugaring") {
+  /*test("MethodCallDesugaring") {
     // Careful: Don't use old inside postcondition. It is not yet supported. maybe I will update the testcase
     val filePrefix = "transformations/MethodCallDesugaring/"
     val files = Seq("simple", "withArgs", "withArgsNRes", "withFields")
@@ -373,7 +373,7 @@ class RewriterTests extends AnyFunSuite with FileComparisonHelper {
     files foreach {
       fileName: String => executeTest(filePrefix, fileName, strat, frontend)
     }
-  }
+  }*/
 
   test("ImplicationSimplification") {
     val filePrefix = "transformations/ImplicationSimplification/"

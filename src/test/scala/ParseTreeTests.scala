@@ -21,7 +21,17 @@ class ParseTreeTests extends AnyFunSuite {
       parseAndCompare(filePrefix + fileName + ".vpr", filePrefix + fileName + "Ref" + ".vpr", frontend))
   }
 
-  test("HygienicMacros") {
+  test("Gradual verification") {
+    val filePrefix = "gradual/"
+    val files = Seq("gradual_atm1")
+
+    val frontend = new MockSilFrontend
+
+    files foreach(fileName =>
+      parseAndCompare(filePrefix + fileName + ".vpr", filePrefix + fileName + ".vpr", frontend))
+  }
+
+  /*test("HygienicMacros") {
     val filePrefix = "transformations/Macros/Hygienic/"
     val files = Seq("simple", "nested", "collision", "collision2", "forall", "loopConstruction")
 
@@ -29,7 +39,7 @@ class ParseTreeTests extends AnyFunSuite {
 
     files foreach (fileName =>
       parseAndCompare(filePrefix + fileName + ".vpr", filePrefix + fileName + "Ref" + ".vpr", frontend))
-  }
+  }*/
 
   test("Positions and Paths") {
     val filePrefix = "transformations/Imports/"

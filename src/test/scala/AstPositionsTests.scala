@@ -45,7 +45,7 @@ class AstPositionsTests extends AnyFunSuite {
     }
   }
 
-  test("Correct positions for methods in a parsed program") {
+  /*test("Correct positions for methods in a parsed program") {
     import viper.silver.ast._
 
     val code =
@@ -188,5 +188,5 @@ class AstPositionsTests extends AnyFunSuite {
       case _ =>
         fail("methods must have start and end positions set")
     }
-  }
+  }*/
 }

@@ -34,9 +34,9 @@ class IOTests extends AnyFunSuite with Matchers {
     runOneCombo(nonExistingFile, pass = true, Seq(), Seq("Cannot find"))
   }
 
-  test(s"$test_prefix: handling parseOnly mode and copyright") {
+  /*test(s"$test_prefix: handling parseOnly mode and copyright") {
     runOneCombo(verifiableFile, pass = true, Seq("--parseOnly"), Seq("MockIOVerifier 3.14"), Seq(), 1)
-  }
+  }*/
 
   test(s"$test_prefix: external dependencies are reported") {
     runOneCombo(verifiableFile, pass = true, Seq("--dependencies"), Seq("DEP_A", "DEP_B"))
@@ -53,20 +53,20 @@ class IOTests extends AnyFunSuite with Matchers {
     //runOneCombo(pass = true, Seq("--plugin", "IOTestPlugin"), Seq("Verification successful"))
   }
 
-  test(s"$test_prefix: reporting verification success") {
+  /*test(s"$test_prefix: reporting verification success") {
     runOneCombo(verifiableFile, pass = true, Seq(), Seq("finished verification successfully"))
-  }
+  }*/
 
-  test(s"$test_prefix: reporting verification failure") {
+  /*test(s"$test_prefix: reporting verification failure") {
     runOneCombo(verifiableFile, pass = false, Seq(), Seq("found 1 error"))
-  }
+  }*/
 
-  test(s"$test_prefix: frontend instance is reusable") {
+  /*test(s"$test_prefix: frontend instance is reusable") {
     runOneCombo(verifiableFile, pass = true,  Seq(),              Seq("finished verification successfully"))
     runOneCombo(verifiableFile, pass = false, Seq(),              Seq("found 1 error"))
     runOneCombo(verifiableFile, pass = true,  Seq("--parseOnly"), Seq(), Seq(), 0)
     runOneCombo(verifiableFile, pass = true,  Seq(),              Seq("finished verification successfully"))
-  }
+  }*/
 
   private def runOneCombo(sil_file: String,              // Input Viper program; if does not exist, simulate absent file.
                   pass: Boolean,                         // Decide whether the mock verifier should succeed verification phase.

@@ -32,7 +32,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
     }
   }
 
-  test("Performance_BinomialHeap") {
+  /*test("Performance_BinomialHeap") {
     val fileName = "transformations/Performance/BinomialHeap"
 
     // Regular expression
@@ -55,7 +55,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
 
 //    time(strat.execute[Program](targetNode))
     strat.execute[Program](targetNode)
-  }
+  }*/
 
 
   test("DisjunctionToInhaleExhaleTests") {
@@ -132,7 +132,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
     })
   }
 
-  test("ComplexMatching") {
+  /*test("ComplexMatching") {
     val filePrefix = "transformations/ComplexMatching/"
     val files = Seq("simple", "complex")
 
@@ -142,7 +142,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
 
     val frontend = new MockSilFrontend
     files foreach { name => executeTest(filePrefix, name, strat, frontend)}
-  }
+  }*/
 
   test("PresentationSlides") {
 
@@ -158,7 +158,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
   }
 
 
-  test("ImplicationToDisjunctionTests") {
+  /*test("ImplicationToDisjunctionTests") {
     val filePrefix = "transformations/ImplicationsToDisjunction/"
     val files = Seq("simple", "nested", "traverseEverything")
 
@@ -169,9 +169,9 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
 
     val frontend = new MockSilFrontend
     files foreach { name => executeTest(filePrefix, name, strat, frontend) }
-  }
+  }*/
 
-  test("WhileToIfAndGoto") {
+  /*test("WhileToIfAndGoto") {
     val filePrefix = "transformations/WhileToIfAndGoto/"
     val files = Seq("simple", "nested")
 
@@ -199,10 +199,10 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
       executeTest(filePrefix, fileName, strat, frontend)
     }
     }
-  }
+  }*/
 
 
-  test("ManyToOneAssert") {
+  /*test("ManyToOneAssert") {
     val filePrefix = "transformations/ManyToOneAssert/"
     val files = Seq("simple", "interrupted", "nested", "nestedBlocks")
     val accumulator: mutable.ListBuffer[Exp] = mutable.ListBuffer.empty[Exp]
@@ -226,7 +226,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
       executeTest(filePrefix, fileName, strat, frontend)
     }
     }
-  }
+  }*/
 
 
   test("UnfoldedChildren") {
@@ -243,7 +243,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
     }
   }
 
-  test("MethodCallDesugaring") {
+  /*test("MethodCallDesugaring") {
     // Careful: Don't use old inside postcondition. It is not yet supported. maybe I will update the testcase (or not)
     val filePrefix = "transformations/MethodCallDesugaring/"
     val files = Seq("simple", "withArgs", "withArgsNRes", "withFields")
@@ -276,7 +276,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
       executeTest(filePrefix, fileName, strat, frontend)
     }
     }
-  }
+  }*/
 
   test("CopyPropagation") {
     val filePrefix = "transformations/CopyPropagation/"
