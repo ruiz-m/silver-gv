@@ -3,8 +3,6 @@
 
 // oldC2SCases/unfolding_old_heap.chalice
 
-//:: IgnoreFile(/silicon/issue/208/)
-
 field x: Int
 
 predicate P(this: Ref) {

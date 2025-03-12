@@ -6,8 +6,6 @@
  * (..._erroneous) horribly slow.
  */
 
-//:: IgnoreFile(/silicon/issue/208/)
-
 
 field val : Int
 field init: Bool

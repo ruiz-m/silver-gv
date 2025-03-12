@@ -12,7 +12,6 @@
   method n(this: Ref)
     requires acc(this.F, write) && acc(this.G, write)
     ensures acc(this.F, write) && acc(this.G, write)
-    //:: ExpectedOutput(parser.error)
     ensures ((this.F) == (old(this.G))) && ((this.G) == (old(this.F)))
   {
     var tmp: Int := this.F
