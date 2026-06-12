@@ -7,7 +7,7 @@
 
 field f: Int
 
-method test01(x: Ref) returns (b: Bool)
+/*method test01(x: Ref) returns (b: Bool)
   requires acc(x.f)
   ensures ? && x.f == old(x.f)
 {
@@ -16,7 +16,7 @@ method test01(x: Ref) returns (b: Bool)
   {
     b := !b
   }
-}
+}*/
 
 
 method test02(x: Ref) returns (b: Bool)

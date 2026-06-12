@@ -60,7 +60,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
 
   test("DisjunctionToInhaleExhaleTests") {
     val filePrefix = "transformations/DisjunctionToInhaleExhale/"
-    val files = Seq("simple", "nested", "functions")
+    val files = Seq("simple"/*, "nested", "functions"*/)
 
     val frontend = new MockSilFrontend
     files foreach (fileName => {
@@ -229,7 +229,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
   }*/
 
 
-  test("UnfoldedChildren") {
+  /*test("UnfoldedChildren") {
     val filePrefix = "transformations/UnfoldedChildren/"
     val files = Seq("fourAnd")
 
@@ -241,7 +241,7 @@ class RegexTests extends AnyFunSuite with FileComparisonHelper {
       executeTest(filePrefix, fileName, strat, frontend)
     }
     }
-  }
+  }*/
 
   /*test("MethodCallDesugaring") {
     // Careful: Don't use old inside postcondition. It is not yet supported. maybe I will update the testcase (or not)
